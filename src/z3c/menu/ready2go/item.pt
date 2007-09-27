@@ -1,0 +1,5 @@
+<li class="current"
+    tal:attributes="class view/css">
+  <a href="#"
+     tal:attributes="href view/url"><span i18n:translate="" tal:content="view/title">Title</span></a>
+</li>

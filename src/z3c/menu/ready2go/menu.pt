@@ -1,0 +1,6 @@
+<tal:block define="viewlets view/viewlets">
+<ul tal:condition="viewlets">
+  <tal:block repeat="viewlet viewlets"
+             content="structure viewlet/render" />
+</ul>
+</tal:block>
