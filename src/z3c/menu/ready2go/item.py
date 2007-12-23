@@ -84,6 +84,13 @@ class MenuItem(viewlet.ViewletBase):
 class GlobalMenuItem(MenuItem):
     """Global menu item."""
 
+    @property
+    def selected(self):
+        if self.viewInterface.providedBy(self.__parent__) and \
+            self.contextInterface.providedBy(self.__parent__.context):
+            return True
+        return False
+
     def getURLContext(self):
         return hooks.getSite()
 
