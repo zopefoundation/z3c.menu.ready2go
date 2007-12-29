@@ -22,6 +22,8 @@ from zope.viewlet import viewlet
 from zope.app.component import hooks
 from zope.app.pagetemplate import ViewPageTemplateFile
 
+from z3c.menu.ready2go import interfaces
+
 
 # base menu item mixin
 class MenuItem(viewlet.ViewletBase):
@@ -36,18 +38,12 @@ class MenuItem(viewlet.ViewletBase):
     cssActive = u'selected'
     cssInActive = u''
     weight = 0
+    subMenuProviderName = None
 
     # override it and use i18n msg ids
     @property
     def title(self):
         return self.__name__
-
-    @property
-    def available(self):
-        return True
-
-    def getURLContext(self):
-        return hooks.getSite()
 
     @property
     def css(self):
@@ -73,6 +69,14 @@ class MenuItem(viewlet.ViewletBase):
         context = self.getURLContext()
         return absoluteURL(context, self.request) + '/' + self.viewName
 
+    @property
+    def subProviderName(self):
+        """Name of the sub item menu provider."""
+        return self.subMenuProviderName
+
+    def getURLContext(self):
+        return hooks.getSite()
+
     def render(self):
         """Return the template with the option 'menus'"""
         return self.template()
@@ -83,6 +87,8 @@ class MenuItem(viewlet.ViewletBase):
 
 class GlobalMenuItem(MenuItem):
     """Global menu item."""
+
+    zope.interface.implements(interfaces.IGlobalMenuItem)
 
     @property
     def selected(self):
@@ -97,6 +103,25 @@ class GlobalMenuItem(MenuItem):
 
 class ContextMenuItem(MenuItem):
     """Context menu item."""
+
+    zope.interface.implements(interfaces.IContextMenuItem)
+
+    def getURLContext(self):
+        return self.context
+
+
+class AddMenuItem(MenuItem):
+    """Add menu item."""
+
+    zope.interface.implements(interfaces.IAddMenuItem)
+
+    @property
+    def selected(self):
+        return False
+
+    @property
+    def subProviderName(self):
+        return None
 
     def getURLContext(self):
         return self.context

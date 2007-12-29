@@ -23,7 +23,7 @@ def read(*rnames):
 
 setup (
     name='z3c.menu.ready2go',
-    version='0.5.0',
+    version='0.5.0dev',
     author = "Stephan Richter, Roger Ineichen and the Zope Community",
     author_email = "zope3-dev@zope.org",
     description = "A ready to go menu for Zope3",
@@ -52,18 +52,19 @@ setup (
     extras_require = dict(
         test = [
             'zope.testbrowser',
-            'zope.app.securitypolicy',
+            'zope.component',
             'zope.app.testing',
-            'zope.app.zcmlfiles',
-            'zope.app.twisted',
+            'z3c.testing',
             ],
         ),
     install_requires = [
         'setuptools',
-        'zope.configuration',
+        'z3c.i18n',
+        'zope.app.component',
+        'zope.app.pagetemplate',
+        'zope.schema',
         'zope.traversing',
-        'zope.app.http',
-        'zope.app.publisher',
+        'zope.viewlet',
         ],
     zip_safe = False,
 )

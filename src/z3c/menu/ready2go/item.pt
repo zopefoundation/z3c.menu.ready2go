@@ -1,5 +1,8 @@
 <li class="current"
-    tal:attributes="class view/css">
+    tal:attributes="class view/css"
+	tal:define="subProviderName view/subProviderName">
   <a href="#"
      tal:attributes="href view/url"><span i18n:translate="" tal:content="view/title">Title</span></a>
+  <tal:block condition="subProviderName"
+             replace="structure provider:${subProviderName}">sub menu items</tal:block>
 </li>
