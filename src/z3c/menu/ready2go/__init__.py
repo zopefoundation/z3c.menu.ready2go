@@ -14,3 +14,17 @@
 """
 $Id: layer.py 197 2007-04-13 05:03:32Z rineichen $
 """
+
+from z3c.menu.ready2go import interfaces
+
+
+class IGlobalMenu(interfaces.IMenuManager):
+    """CSS viewlet manager."""
+
+
+class IContextMenu(interfaces.IMenuManager):
+    """CSS viewlet manager."""
+
+
+class IAddMenu(interfaces.IMenuManager):
+    """CSS viewlet manager."""
