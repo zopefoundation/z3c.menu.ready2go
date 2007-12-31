@@ -17,7 +17,9 @@ $Id: layer.py 197 2007-04-13 05:03:32Z rineichen $
 __docformat__ = "reStructuredText"
 
 import zope.interface
+from zope.traversing.api import getRoot
 from zope.traversing.browser import absoluteURL
+
 from zope.viewlet import viewlet
 from zope.app.component import hooks
 from zope.app.pagetemplate import ViewPageTemplateFile
@@ -58,9 +60,9 @@ class MenuItem(viewlet.ViewletBase):
 
     @property
     def selected(self):
+        """Selected if context and view interfaces compares."""
         if self.viewInterface.providedBy(self.__parent__) and \
-            self.contextInterface.providedBy(self.__parent__.context) and \
-            self.__parent__.__name__ == self.viewName:
+            self.contextInterface.providedBy(self.__parent__.context):
             return True
         return False
 
@@ -75,7 +77,7 @@ class MenuItem(viewlet.ViewletBase):
         return self.subMenuProviderName
 
     def getURLContext(self):
-        return hooks.getSite()
+        return getRoot(self.context)
 
     def render(self):
         """Return the template with the option 'menus'"""
@@ -97,6 +99,12 @@ class GlobalMenuItem(MenuItem):
             return True
         return False
 
+
+class SiteMenuItem(MenuItem):
+    """Site menu item."""
+
+    zope.interface.implements(interfaces.IGlobalMenuItem)
+
     def getURLContext(self):
         return hooks.getSite()
 
@@ -105,6 +113,15 @@ class ContextMenuItem(MenuItem):
     """Context menu item."""
 
     zope.interface.implements(interfaces.IContextMenuItem)
+
+    @property
+    def selected(self):
+        """Selected if also view name compares."""
+        if self.viewInterface.providedBy(self.__parent__) and \
+            self.contextInterface.providedBy(self.__parent__.context) and \
+            self.__parent__.__name__ == self.viewName:
+            return True
+        return False
 
     def getURLContext(self):
         return self.context

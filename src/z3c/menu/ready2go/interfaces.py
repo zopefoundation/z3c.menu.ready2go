@@ -107,6 +107,10 @@ class IMenuItem(interfaces.IViewlet):
 
 
 class IGlobalMenuItem(IMenuItem):
+    """Menu item with ZODB application root as url base."""
+
+
+class ISiteMenuItem(IMenuItem):
     """Menu item with nearest site as url base."""
 
 

@@ -22,6 +22,10 @@ class IGlobalMenu(interfaces.IMenuManager):
     """CSS viewlet manager."""
 
 
+class ISiteMenu(interfaces.IMenuManager):
+    """CSS viewlet manager."""
+
+
 class IContextMenu(interfaces.IMenuManager):
     """CSS viewlet manager."""
 
