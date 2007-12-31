@@ -16,8 +16,10 @@ $Id: __init__.py 97 2007-03-29 22:58:27Z rineichen $
 """
 
 import unittest
+import zope.interface
 import zope.component
 from zope.traversing.browser.interfaces import IAbsoluteURL
+from zope.traversing.interfaces import IPhysicallyLocatable
 from zope.app.component import hooks
 from zope.app.testing import setup
 
@@ -30,8 +32,18 @@ from z3c.menu.ready2go import manager
 class ParentStub(object):
     """Just an object supporting a context attribtute."""
 
-    context = None
-    __name__ = None
+    __name__ = __parent__ = context = None
+
+    zope.interface.implements(IPhysicallyLocatable)
+
+    def __init__(self, path=('a', 'b')):
+        self.path = path
+
+    def getRoot(self):
+        return self
+
+    def getPath(self):
+        return self.path
 
 
 class AbsoulteURLStub(object):
@@ -74,6 +86,25 @@ class GlobalMenuItemTest(z3c.testing.InterfaceBaseTest):
         return item.GlobalMenuItem
 
     def getTestPos(self):
+        return (ParentStub(), None, ParentStub(), None)
+
+
+class SiteMenuItemTest(z3c.testing.InterfaceBaseTest):
+
+    def setUp(self):
+        site = setup.placefulSetUp(site=True)
+        hooks.setSite(site)
+        zope.component.provideAdapter(AbsoulteURLStub, (None, None),
+            IAbsoluteURL)
+        super(SiteMenuItemTest, self).setUp()
+
+    def getTestInterface(self):
+        return interfaces.ISiteMenuItem
+
+    def getTestClass(self):
+        return item.SiteMenuItem
+
+    def getTestPos(self):
         return (None, None, ParentStub(), None)
 
 
@@ -93,6 +124,7 @@ def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(MenuManagerTest),
         unittest.makeSuite(GlobalMenuItemTest),
+        unittest.makeSuite(SiteMenuItemTest),
         unittest.makeSuite(ContextMenuItemTest),
         ))
 

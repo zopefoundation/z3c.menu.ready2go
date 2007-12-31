@@ -103,7 +103,7 @@ class GlobalMenuItem(MenuItem):
 class SiteMenuItem(MenuItem):
     """Site menu item."""
 
-    zope.interface.implements(interfaces.IGlobalMenuItem)
+    zope.interface.implements(interfaces.ISiteMenuItem)
 
     def getURLContext(self):
         return hooks.getSite()
