@@ -26,3 +26,15 @@ class MenuManager(manager.ConditionalViewletManager):
     """Menu manager for all kind of menu items"""
 
     zope.interface.implements(interfaces.IMenuManager)
+
+
+class EmptyMenuManager(object):
+    """Empty menu manager."""
+
+    zope.interface.implements(interfaces.IMenuManager)
+
+    def update(self):
+        pass
+
+    def render(self):
+        return u''
