@@ -33,6 +33,12 @@ class EmptyMenuManager(object):
 
     zope.interface.implements(interfaces.IMenuManager)
 
+    def __init__(self, context, request, view):
+        self.__updated = False
+        self.__parent__ = view
+        self.context = context
+        self.request = request
+
     def update(self):
         pass
 
