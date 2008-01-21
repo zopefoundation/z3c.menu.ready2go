@@ -18,6 +18,8 @@ $Id: __init__.py 97 2007-03-29 22:58:27Z rineichen $
 import unittest
 import zope.interface
 import zope.component
+from zope.testing import doctest
+from zope.testing.doctestunit import DocFileSuite
 from zope.traversing.browser.interfaces import IAbsoluteURL
 from zope.traversing.interfaces import IPhysicallyLocatable
 from zope.app.component import hooks
@@ -27,6 +29,7 @@ import z3c.testing
 from z3c.menu.ready2go import interfaces
 from z3c.menu.ready2go import item
 from z3c.menu.ready2go import manager
+from z3c.menu.ready2go import testing
 
 
 class ParentStub(object):
@@ -122,6 +125,10 @@ class ContextMenuItemTest(z3c.testing.InterfaceBaseTest):
 
 def test_suite():
     return unittest.TestSuite((
+        DocFileSuite('README.txt',
+            setUp=testing.setUp, tearDown=testing.tearDown,
+            optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+            ),
         unittest.makeSuite(MenuManagerTest),
         unittest.makeSuite(GlobalMenuItemTest),
         unittest.makeSuite(SiteMenuItemTest),
