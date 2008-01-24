@@ -17,15 +17,31 @@ $Id: layer.py 197 2007-04-13 05:03:32Z rineichen $
 __docformat__ = "reStructuredText"
 
 import zope.interface
+import zope.security
 from zope.viewlet import manager
 
 from z3c.menu.ready2go import interfaces
+
+
+def isAvailable(viewlet):
+    try:
+        return zope.security.canAccess(viewlet, 'render') and viewlet.approved
+    except AttributeError:
+        return True
 
 
 class MenuManager(manager.ConditionalViewletManager):
     """Menu manager for all kind of menu items"""
 
     zope.interface.implements(interfaces.IMenuManager)
+
+    def filter(self, viewlets):
+        """Sort out all viewlets which are explicit not available
+
+        ``viewlets`` is a list of tuples of the form (name, viewlet).
+        """
+        return [(name, viewlet) for name, viewlet in viewlets
+                if isAvailable(viewlet)]
 
 
 class EmptyMenuManager(object):

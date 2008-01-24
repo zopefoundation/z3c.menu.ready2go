@@ -32,6 +32,25 @@ from z3c.menu.ready2go import manager
 from z3c.menu.ready2go import testing
 
 
+class CheckerStub(object):
+    """Just a checker stub."""
+
+    def __init__(self, context, request, view, menu, item):
+        self.context = context
+        self.request = request
+        self.view = view
+        self.menu = menu
+        self.item = item
+
+    @property
+    def available(self):
+        return True
+
+    @property
+    def selected(self):
+        return True
+
+
 class ParentStub(object):
     """Just an object supporting a context attribtute."""
 
@@ -80,6 +99,8 @@ class GlobalMenuItemTest(z3c.testing.InterfaceBaseTest):
         hooks.setSite(site)
         zope.component.provideAdapter(AbsoulteURLStub, (None, None),
             IAbsoluteURL)
+        zope.component.provideAdapter(CheckerStub, (None, None, None, None,
+            None), interfaces.ISelectedChecker)
         super(GlobalMenuItemTest, self).setUp()
 
     def getTestInterface(self):
@@ -99,6 +120,8 @@ class SiteMenuItemTest(z3c.testing.InterfaceBaseTest):
         hooks.setSite(site)
         zope.component.provideAdapter(AbsoulteURLStub, (None, None),
             IAbsoluteURL)
+        zope.component.provideAdapter(CheckerStub, (None, None, None, None,
+            None), interfaces.ISelectedChecker)
         super(SiteMenuItemTest, self).setUp()
 
     def getTestInterface(self):
@@ -113,6 +136,11 @@ class SiteMenuItemTest(z3c.testing.InterfaceBaseTest):
 
 class ContextMenuItemTest(z3c.testing.InterfaceBaseTest):
 
+    def setUp(self):
+        zope.component.provideAdapter(CheckerStub, (None, None, None, None,
+            None), interfaces.ISelectedChecker)
+        super(ContextMenuItemTest, self).setUp()
+
     def getTestInterface(self):
         return interfaces.IContextMenuItem
 
@@ -126,6 +154,10 @@ class ContextMenuItemTest(z3c.testing.InterfaceBaseTest):
 def test_suite():
     return unittest.TestSuite((
         DocFileSuite('README.txt',
+            setUp=testing.setUp, tearDown=testing.tearDown,
+            optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+            ),
+        DocFileSuite('zcml.txt',
             setUp=testing.setUp, tearDown=testing.tearDown,
             optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
             ),

@@ -15,6 +15,7 @@
 $Id: layer.py 197 2007-04-13 05:03:32Z rineichen $
 """
 
+import zope.interface
 import zope.schema
 from zope.viewlet import interfaces
 
@@ -93,7 +94,7 @@ class IMenuItem(interfaces.IViewlet):
         default=u''
         )
 
-    subProviderName = zope.schema.TextLine(
+    subMenuProviderName = zope.schema.TextLine(
         title=_('Sub menu provider name'),
         description=_('Name of the sub menu provider.'),
         default=u''
@@ -104,6 +105,16 @@ class IMenuItem(interfaces.IViewlet):
 
     def render():
         """Return the template with the option 'menus'"""
+
+
+class ISelectedChecker(zope.interface.Interface):
+    """Selected checker."""
+
+    selected = zope.schema.Bool(
+        title=_('Selected'),
+        description=_('Marker for selected menu item'),
+        default=False
+        )
 
 
 class IGlobalMenuItem(IMenuItem):

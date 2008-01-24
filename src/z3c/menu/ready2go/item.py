@@ -33,14 +33,47 @@ class MenuItem(viewlet.ViewletBase):
 
     template = ViewPageTemplateFile('item.pt')
 
-    # set this attrs directly in zcml or override it in a sub class
+    # internal approved values
+    approved = False
+    approvedURL = None
+
+    # url view name if different then ``selected`` viewName
+    viewName = u'index.html'
+
+    # ``selected`` discriminator values
     contextInterface = zope.interface.Interface
     viewInterface = zope.interface.Interface
-    viewName = u'index.html'
+    selectedViewName = viewName
+
+    # css classes
     cssActive = u'selected'
     cssInActive = u''
+
+    # menu order weight
     weight = 0
+
+    # sub menu provider name
     subMenuProviderName = None
+
+    def __init__(self, context, request, view, manager):
+        super(MenuItem, self).__init__(context, request, view, manager)
+        self.view = view
+        self.setupFilter()
+
+    def setupFilter(self):
+        """Catch location error and set approved attributes.
+        
+        Note, this get called before update because the filter method in menu 
+        manager needs to know that before the menu items update method get 
+        called.
+        """
+        try:
+            if self.available:
+                self.approvedURL = self.url
+                self.approved = True
+        except TypeError:
+            self.approvedURL = None
+            self.approved = False
 
     # override it and use i18n msg ids
     @property
@@ -49,32 +82,33 @@ class MenuItem(viewlet.ViewletBase):
 
     @property
     def css(self):
-        if self.selected:
+        """Return cssActive, cssInActive or None. 
+
+        None will not render a HTML attribute in TAL.
+        """
+        if self.selected and self.cssActive:
             return self.cssActive
-        else:
+        elif self.selected and self.cssInActive:
             return self.cssInActive
+        else:
+            return None
 
     @property
     def available(self):
+        """Available checker call"""
         return True
 
     @property
     def selected(self):
-        """Selected if context and view interfaces compares."""
-        if self.viewInterface.providedBy(self.__parent__) and \
-            self.contextInterface.providedBy(self.__parent__.context):
-            return True
-        return False
+        """Selected checker call"""
+        checker = zope.component.getMultiAdapter((self.context, self.request,
+            self.view, self.manager, self), interfaces.ISelectedChecker)
+        return checker.selected
 
     @property
     def url(self):
-        context = self.getURLContext()
-        return absoluteURL(context, self.request) + '/' + self.viewName
-
-    @property
-    def subProviderName(self):
-        """Name of the sub item menu provider."""
-        return self.subMenuProviderName
+        return '%s/%s' % (absoluteURL(self.getURLContext(), self.request),
+            self.viewName)
 
     def getURLContext(self):
         return getRoot(self.context)
@@ -92,13 +126,6 @@ class GlobalMenuItem(MenuItem):
 
     zope.interface.implements(interfaces.IGlobalMenuItem)
 
-    @property
-    def selected(self):
-        if self.viewInterface.providedBy(self.__parent__) and \
-            self.contextInterface.providedBy(self.__parent__.context):
-            return True
-        return False
-
 
 class SiteMenuItem(MenuItem):
     """Site menu item."""
@@ -114,15 +141,6 @@ class ContextMenuItem(MenuItem):
 
     zope.interface.implements(interfaces.IContextMenuItem)
 
-    @property
-    def selected(self):
-        """Selected if also view name compares."""
-        if self.viewInterface.providedBy(self.__parent__) and \
-            self.contextInterface.providedBy(self.__parent__.context) and \
-            self.__parent__.__name__ == self.viewName:
-            return True
-        return False
-
     def getURLContext(self):
         return self.context
 
@@ -132,13 +150,11 @@ class AddMenuItem(MenuItem):
 
     zope.interface.implements(interfaces.IAddMenuItem)
 
+    subMenuProviderName = None
+
     @property
     def selected(self):
         return False
-
-    @property
-    def subProviderName(self):
-        return None
 
     def getURLContext(self):
         return self.context

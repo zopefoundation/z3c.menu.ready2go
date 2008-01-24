@@ -17,7 +17,13 @@ $Id: tests.py 82943 2008-01-18 10:01:06Z rogerineichen $
 __docformat__ = 'restructuredtext'
 
 import zope.security
-from zope.app.testing import setup, ztapi
+from zope.publisher.interfaces.browser import IBrowserView
+from zope.app.testing import setup
+from zope.app.testing import ztapi
+from zope.app.container import contained
+
+from z3c.menu.ready2go import interfaces
+from z3c.menu.ready2go import item
 
 
 class TestParticipation(object):
@@ -25,16 +31,62 @@ class TestParticipation(object):
     interaction = None
 
 
+class ISample(zope.interface.Interface):
+    """Sample context interface."""
+
+
+class Sample(object):
+    """Sample context object."""
+
+    zope.interface.implements(ISample)
+
+    def __init__(self, title):
+        self.title = title
+
+
+class LocatableView(contained.Contained):
+
+    zope.interface.implements(IBrowserView)
+
+    def __init__(self, context, request):
+        self.__parent__ = context
+        self.context = context
+        self.request = request
+
+class IFirstView(IBrowserView):
+    """First sample view interface."""
+
+class ISecondView(IBrowserView):
+    """Second sample view interface."""
+
+class FirstView(LocatableView):
+    """First view."""
+
+    zope.interface.implements(IFirstView)
+
+class SecondView(LocatableView):
+    """Second view."""
+
+    zope.interface.implements(ISecondView)
+
+
+class IFirstMenu(interfaces.IMenuManager):
+    """First menu manager."""
+
+class ISecondMenu(interfaces.IMenuManager):
+    """Second menu manager."""
+
+
+class FirstMenuItem(item.ContextMenuItem):
+    viewName = 'first.html'
+
+class SecondMenuItem(item.ContextMenuItem):
+    viewName = 'second.html'
+
+
 def setUp(test):
     root = setup.placefulSetUp(site=True)
     test.globs['root'] = root
-
-
-    # resource namespace setup
-    from zope.traversing.interfaces import ITraversable
-    from zope.traversing.namespace import resource
-    ztapi.provideAdapter(None, ITraversable, resource, name="resource")
-    ztapi.provideView(None, None, ITraversable, "resource", resource)
 
     from zope.app.pagetemplate import metaconfigure
     from zope.contentprovider import tales
