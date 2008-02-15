@@ -13,4 +13,6 @@
       factory=".checker.ContextSelectedChecker"
       />
 
+  <include file="browser.zcml" />
+
 </configure>

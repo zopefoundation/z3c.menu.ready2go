@@ -1,0 +1,13 @@
+<configure 
+    xmlns:zope="http://namespaces.zope.org/zope"
+    xmlns="http://namespaces.zope.org/browser"
+    xmlns:z3c="http://namespaces.zope.org/z3c"
+    i18n_domain="z3c">
+
+  <z3c:template
+      template="item.pt"
+      for=".item.MenuItem"
+      layer="zope.publisher.interfaces.browser.IBrowserRequest"
+      />
+
+</configure>

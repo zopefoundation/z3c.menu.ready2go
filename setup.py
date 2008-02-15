@@ -60,6 +60,7 @@ setup (
     install_requires = [
         'setuptools',
         'z3c.i18n',
+        'z3c.template',
         'zope.app.component',
         'zope.app.pagetemplate',
         'zope.schema',

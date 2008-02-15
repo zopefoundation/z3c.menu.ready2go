@@ -5,7 +5,20 @@ Ready 2 go Menu
 The z3c.menu.ready2go package provides a menu implementation which allows you 
 to implement menus based on content providers and viewlets.
 
-Let's see what this means.
+First let's setup our defualt menu item template:
+
+  >>> import os
+  >>> import zope.component
+  >>> from zope.publisher.interfaces.browser import IDefaultBrowserLayer
+  >>> from zope.publisher.interfaces.browser import IBrowserView
+  >>> from z3c.template.interfaces import IContentTemplate
+  >>> from z3c.template.template import TemplateFactory
+  >>> import z3c.menu.ready2go
+  >>> baseDir = os.path.split(z3c.menu.ready2go.__file__)[0]
+  >>> itemTemplate = os.path.join(baseDir, 'item.pt')
+  >>> itemTemplateFactory = TemplateFactory(itemTemplate, 'text/html')
+  >>> zope.component.provideAdapter(itemTemplateFactory,
+  ...     (IBrowserView, IDefaultBrowserLayer), IContentTemplate)
 
 
 Global Menu
@@ -54,7 +67,6 @@ Our menu managers implement IMenuManager:
 We also need our checker adapter which can check if a menu item is available
 and/or selected:
 
-  >>> import zope.component
   >>> from z3c.menu.ready2go import checker
   >>> zope.component.provideAdapter(checker.GlobalSelectedChecker)
   >>> zope.component.provideAdapter(checker.SiteSelectedChecker)
@@ -97,7 +109,6 @@ traaverse to the site within the publisher/traverser:
 
 And we need a view which knows about it's parent:
 
-  >>> from zope.publisher.interfaces.browser import IBrowserView
   >>> class View(contained.Contained):
   ... 
   ...     zope.interface.implements(IBrowserView)
@@ -138,8 +149,6 @@ Global Menu Item
 ----------------
 
 Now we register a context menu item for our IGlobalMenu:
-
-  >>> from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
   >>> from z3c.menu.ready2go.item import GlobalMenuItem
   >>> class MyGlobalMenuItem(GlobalMenuItem):

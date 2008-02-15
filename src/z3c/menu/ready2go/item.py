@@ -22,8 +22,8 @@ from zope.traversing.browser import absoluteURL
 
 from zope.viewlet import viewlet
 from zope.app.component import hooks
-from zope.app.pagetemplate import ViewPageTemplateFile
 
+from z3c.template.template import getPageTemplate
 from z3c.menu.ready2go import interfaces
 
 
@@ -31,7 +31,7 @@ from z3c.menu.ready2go import interfaces
 class MenuItem(viewlet.ViewletBase):
     """Menu item base."""
 
-    template = ViewPageTemplateFile('item.pt')
+    template = getPageTemplate()
 
     # internal approved values
     approved = False

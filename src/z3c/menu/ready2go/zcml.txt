@@ -5,6 +5,21 @@ Z3C Menu directives
 Show how we can use the menu directive. Register the meta configuration for 
 the directive.
 
+First let's setup our defualt menu item template first:
+
+  >>> import os
+  >>> import zope.component
+  >>> from zope.publisher.interfaces.browser import IDefaultBrowserLayer
+  >>> from zope.publisher.interfaces.browser import IBrowserView
+  >>> from z3c.template.interfaces import IContentTemplate
+  >>> from z3c.template.template import TemplateFactory
+  >>> import z3c.menu.ready2go
+  >>> baseDir = os.path.split(z3c.menu.ready2go.__file__)[0]
+  >>> itemTemplate = os.path.join(baseDir, 'item.pt')
+  >>> itemTemplateFactory = TemplateFactory(itemTemplate, 'text/html')
+  >>> zope.component.provideAdapter(itemTemplateFactory,
+  ...     (IBrowserView, IDefaultBrowserLayer), IContentTemplate)
+
   >>> import sys
   >>> from zope.configuration import xmlconfig
   >>> import z3c.menu.ready2go
