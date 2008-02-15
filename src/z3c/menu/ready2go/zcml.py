@@ -17,9 +17,7 @@ $Id:$
 __docformat__ = "reStructuredText"
 
 import zope.interface
-import zope.schema
 import zope.configuration.fields
-import zope.security.zcml
 from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.publisher.interfaces.browser import IBrowserView
 
