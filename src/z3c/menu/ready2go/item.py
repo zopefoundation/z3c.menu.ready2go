@@ -17,6 +17,7 @@ $Id: layer.py 197 2007-04-13 05:03:32Z rineichen $
 __docformat__ = "reStructuredText"
 
 import zope.interface
+import zope.proxy
 from zope.traversing.api import getRoot
 from zope.traversing.browser import absoluteURL
 
@@ -131,6 +132,13 @@ class SiteMenuItem(MenuItem):
     """Site menu item."""
 
     zope.interface.implements(interfaces.ISiteMenuItem)
+
+    @property
+    def available(self):
+        """Available checker call"""
+        root = zope.proxy.getProxiedObject(getRoot(self.context))
+        site = zope.proxy.getProxiedObject(hooks.getSite())
+        return site is not root
 
     def getURLContext(self):
         return hooks.getSite()
