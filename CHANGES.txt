@@ -3,8 +3,8 @@ CHANGES
 =======
 
 
-Version 0.5.0dev (unreleased)
------------------------------
+Version 0.5.0 (2008-04-11)
+--------------------------
 
 - bugfix: fixed cssInActive usage. This was broken and ended in not using the 
   cssInActive CSS class argument
