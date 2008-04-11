@@ -51,10 +51,12 @@ setup (
     namespace_packages = ['z3c'],
     extras_require = dict(
         test = [
-            'zope.testbrowser',
-            'zope.component',
-            'zope.app.testing',
             'z3c.testing',
+            'zope.app.container',
+            'zope.app.pagetemplate',
+            'zope.app.testing',
+            'zope.component',
+            'zope.traversing',
             ],
         ),
     install_requires = [
@@ -63,7 +65,12 @@ setup (
         'z3c.template',
         'zope.app.component',
         'zope.app.pagetemplate',
+        'zope.configuration',
+        'zope.interface',
+        'zope.proxy',
+        'zope.publisher',
         'zope.schema',
+        'zope.security',
         'zope.traversing',
         'zope.viewlet',
         ],

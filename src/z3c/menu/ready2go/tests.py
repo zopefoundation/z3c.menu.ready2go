@@ -131,7 +131,7 @@ class SiteMenuItemTest(z3c.testing.InterfaceBaseTest):
         return item.SiteMenuItem
 
     def getTestPos(self):
-        return (None, None, ParentStub(), None)
+        return (ParentStub(), None, ParentStub(), None)
 
 
 class ContextMenuItemTest(z3c.testing.InterfaceBaseTest):

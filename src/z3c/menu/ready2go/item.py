@@ -85,11 +85,11 @@ class MenuItem(viewlet.ViewletBase):
     def css(self):
         """Return cssActive, cssInActive or None. 
 
-        None will not render a HTML attribute in TAL.
+        None will force not rendering a HTML attribute in the element tag.
         """
         if self.selected and self.cssActive:
             return self.cssActive
-        elif self.selected and self.cssInActive:
+        elif not self.selected and self.cssInActive:
             return self.cssInActive
         else:
             return None

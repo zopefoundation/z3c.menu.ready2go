@@ -2,12 +2,6 @@
 CHANGES
 =======
 
-Note
-----
-
-This package is not ready to use because the API will probably change
-another time.
-
 
 Version 0.5.0dev (unreleased)
 -----------------------------

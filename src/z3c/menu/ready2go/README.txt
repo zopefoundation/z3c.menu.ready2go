@@ -170,9 +170,17 @@ And we configure our menu item for IGlobalMenu. This is normaly done by the
   ...     IBrowserView, IGlobalMenu),
   ...     IViewlet, name='My Global')
 
-Now let's render the global menu again. You can see that we ve got a menu item:
+Now let's update the menu manager and see that this manager now contains 
+the menu item:
 
   >>> globalMenu.update()
+  >>> myGlobalMenuItem = globalMenu.viewlets[0]
+  >>> myGlobalMenuItem
+  <MyGlobalMenuItem u'My Global'>
+
+Now let's render the global menu manager and you can see that the menu item
+get rendered:
+
   >>> print globalMenu.render()
   <li>
     <a href="http://127.0.0.1/root.html"><span>My Global</span></a>
@@ -261,12 +269,78 @@ selected:
 
   >>> view.__name__ = 'context.html'
 
-Now try again and see if the context menu titem get rendered as selected:
+Now try again and see if the context menu item get rendered as selected:
 
   >>> contextMenu.update()
   >>> print contextMenu.render()
   <li class="selected">
     <a href="http://127.0.0.1/site/content/context.html"><span>My Context</span></a>
+  </li>
+
+Now add a second context menu item and check if we can use the cssInActive
+argument which is normaly a empty string:
+
+  >>> class InActiveMenuItem(ContextMenuItem):
+  ...
+  ...     viewName = 'inActive.html'
+  ...     cssInActive = 'inActive'
+
+  >>> defineChecker(InActiveMenuItem, viewletChecker)
+
+  >>> zope.component.provideAdapter(
+  ...     InActiveMenuItem,
+  ...     (zope.interface.Interface, IDefaultBrowserLayer,
+  ...     IBrowserView, IContextMenu),
+  ...     IViewlet, name='In Active')
+
+Now update and render again:
+
+  >>> contextMenu.update()
+  >>> print contextMenu.render()
+  <li class="selected">
+    <a href="http://127.0.0.1/site/content/context.html"><span>My Context</span></a>
+  </li>
+  <li class="inActive">
+    <a href="http://127.0.0.1/site/content/inActive.html"><span>In Active</span></a>
+  </li>
+
+
+AddMenu
+-------
+
+The add menu can be used for offering links to any kind of add forms per 
+context. This allows us to offer independent add form links doesn't matter which
+form framework is used. Let's now define such a simple AddMenuItem pointing
+to a add form url. Not; the add form and it's url do not exist in thsi test.
+This aslo means there is no guarantee that a form exist if a add menu item
+is configured.
+
+  >>> from z3c.menu.ready2go.item import AddMenuItem
+  >>> class MyAddMenuItem(AddMenuItem):
+  ...
+  ...     viewName = 'addSomething.html'
+
+Now we need a security checker for our menu item
+
+  >>> from zope.security.checker import NamesChecker, defineChecker
+  >>> viewletChecker = NamesChecker(('update', 'render'))
+  >>> defineChecker(MyAddMenuItem, viewletChecker)
+
+And we configure our menu item for IAddMenu. This is normaly done by the
+``viewlet`` ZCML directive:
+
+  >>> zope.component.provideAdapter(
+  ...     MyAddMenuItem,
+  ...     (zope.interface.Interface, IDefaultBrowserLayer,
+  ...     IBrowserView, IAddMenu),
+  ...     IViewlet, name='My AddMenu')
+
+Now we can update and render our add menu:
+
+  >>> addMenu.update()
+  >>> print addMenu.render()
+  <li>
+    <a href="http://127.0.0.1/site/content/addSomething.html"><span>My AddMenu</span></a>
   </li>
 
 
@@ -304,6 +378,30 @@ of the content object is selected too.
   <li class="selected">
     <a href="http://127.0.0.1/site/content/context.html"><span>My Context</span></a>
   </li>
+  <li class="inActive">
+    <a href="http://127.0.0.1/site/content/inActive.html"><span>In Active</span></a>
+  </li>
+
+
+EmptyMenuManager
+----------------
+
+There is a empty menu manager whihc could be used for override existing
+menu managers.
+
+  >>> from z3c.menu.ready2go.manager import EmptyMenuManager
+  >>> emptyMenu = EmptyMenuManager(None, None, None)
+
+Our empty menu manager implements IMenuManager:
+
+  >>> interfaces.IMenuManager.providedBy(emptyMenu)
+  True
+
+This empty menu manager returns allways an empty string if we render them:
+
+  >>> emptyMenu.update()
+  >>> emptyMenu.render()
+  u''
 
 
 Special use case
@@ -326,23 +424,20 @@ Now we can check what's happen to the menus if we adapt the parent less nirvana
 context and update and render the menus. You can see that the global menu does
 not contain any menu item. That's because the global menu items tries to find
 the root by traversing from the context to the root by the __parent__ chain
-and we don't support any parent for your nirvana object:
+and we don't support any parent for our nirvana object:
 
   >>> globalMenu = GlobalMenu(nirvana, request, nirvanaView)
   >>> globalMenu.update()
   >>> globalMenu.render()
   u''
 
-But you can see that the site menu renders the menu item becyuse we lookup the 
-site by the hooks and we still point to our site we set with setSite():
+Also the SiteMenu doesn't contain any menu item because of the parent less
+object:
 
   >>> siteMenu = SiteMenu(nirvana, request, nirvanaView)
   >>> siteMenu.update()
-  >>> print siteMenu.render()
-  <li class="selected">
-    <a href="http://127.0.0.1/site/site.html"><span>My Site</span></a>
-  </li>
-
+  >>> siteMenu.render()
+  u''
 
   >>> contextMenu = ContextMenu(nirvana, request, nirvanaView)
   >>> contextMenu.update()
