@@ -23,7 +23,7 @@ def read(*rnames):
 
 setup (
     name='z3c.menu.ready2go',
-    version='0.5.0dev',
+    version='0.5.0',
     author = "Stephan Richter, Roger Ineichen and the Zope Community",
     author_email = "zope3-dev@zope.org",
     description = "A ready to go menu for Zope3",
@@ -48,7 +48,7 @@ setup (
     packages = find_packages('src'),
     include_package_data = True,
     package_dir = {'':'src'},
-    namespace_packages = ['z3c'],
+    namespace_packages = ['z3c', 'z3c.menu'],
     extras_require = dict(
         test = [
             'z3c.testing',
