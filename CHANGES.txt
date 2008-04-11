@@ -6,6 +6,11 @@ CHANGES
 Version 0.5.0dev (unreleased)
 -----------------------------
 
+- bugfix: fixed cssInActive usage. This was broken and ended in not using the 
+  cssInActive CSS class argument
+
+- added more tests, now we have 100% coverage
+
 - make ISiteMenu only available for ISite but not for IContainmentRoot
 
 - make template pluggable with z3c.template pattern
