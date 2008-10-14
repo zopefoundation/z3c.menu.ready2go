@@ -34,6 +34,9 @@ class MenuItem(viewlet.ViewletBase):
 
     template = getPageTemplate()
 
+    # see z3c:add/context/site/globalMenuItemDirective
+    i18nTitle = None
+
     # internal approved values
     approved = False
     approvedURL = None
@@ -79,7 +82,7 @@ class MenuItem(viewlet.ViewletBase):
     # override it and use i18n msg ids
     @property
     def title(self):
-        return self.__name__
+        return self.i18nTitle or self.__name__
 
     @property
     def css(self):

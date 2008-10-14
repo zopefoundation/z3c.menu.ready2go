@@ -5,6 +5,30 @@
   <meta:directives namespace="http://namespaces.zope.org/z3c">
 
     <meta:directive
+        name="addMenuItem"
+        schema=".zcml.IMenuItemDirective"
+        handler=".zcml.addMenuItemDirective"
+        />
+
+    <meta:directive
+        name="contextMenuItem"
+        schema=".zcml.IMenuItemDirective"
+        handler=".zcml.contextMenuItemDirective"
+        />
+
+    <meta:directive
+        name="globalMenuItem"
+        schema=".zcml.IMenuItemDirective"
+        handler=".zcml.globalMenuItemDirective"
+        />
+
+    <meta:directive
+        name="siteMenuItem"
+        schema=".zcml.IMenuItemDirective"
+        handler=".zcml.siteMenuItemDirective"
+        />
+
+    <meta:directive
         name="menuSelector"
         schema=".zcml.IMenuSelectorDirective"
         handler=".zcml.menuSelectorDirective"

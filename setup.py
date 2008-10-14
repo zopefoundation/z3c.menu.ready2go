@@ -65,6 +65,7 @@ setup (
         'z3c.template',
         'zope.app.component',
         'zope.app.pagetemplate',
+        'zope.app.publisher',
         'zope.configuration',
         'zope.interface',
         'zope.proxy',
