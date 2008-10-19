@@ -87,7 +87,10 @@ class IMenuItemDirective(IViewletDirective):
         title=u"I18n title",
         description=u"Translatable title for a viewlet.",
         required=False)
-    
+
+# Arbitrary keys and values are allowed to be passed to the menu item.
+IMenuItemDirective.setTaggedValue('keyword_arguments', True)
+
 
 # menuItem directive
 def menuItemDirective(
@@ -99,10 +102,10 @@ def menuItemDirective(
 
     # Security map dictionary
     required = {}
-    
+
     if title is not None:
         # set i18n aware title
-        kwargs['i18nTitle'] = title 
+        kwargs['i18nTitle'] = title
 
     # Get the permission; mainly to correctly handle CheckerPublic.
     permission = viewmeta._handle_permission(_context, permission)
