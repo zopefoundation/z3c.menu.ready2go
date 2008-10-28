@@ -277,6 +277,20 @@ Now try again and see if the context menu item get rendered as selected:
     <a href="http://127.0.0.1/site/content/context.html"><span>My Context</span></a>
   </li>
 
+Also, let's check that menu item is marked selected even if we provided a viewName in
+the ``@@context.html`` form: 
+
+  >>> MyContextMenuItem.viewName = '@@context.html'
+  >>> contextMenu.update()
+  >>> print contextMenu.render()
+  <li class="selected">
+    <a href="http://127.0.0.1/site/content/@@context.html"><span>My Context</span></a>
+  </li>
+
+Okay, change viewName back to ``context.html`` for further tests:
+
+  >>> MyContextMenuItem.viewName = 'context.html'
+
 Now add a second context menu item and check if we can use the cssInActive
 argument which is normaly a empty string:
 
@@ -303,7 +317,6 @@ Now update and render again:
   <li class="inActive">
     <a href="http://127.0.0.1/site/content/inActive.html"><span>In Active</span></a>
   </li>
-
 
 AddMenu
 -------

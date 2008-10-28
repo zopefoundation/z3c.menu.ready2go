@@ -6,7 +6,8 @@ CHANGES
 Version 0.5.1dev (unreleased)
 -----------------------------
 
-- ...
+- Add support for viewName's that start with ``@@``. They are now processed
+  properly by the ViewNameSelectedChecker.
 
 
 Version 0.5.0 (2008-04-11)

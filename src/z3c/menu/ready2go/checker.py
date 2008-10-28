@@ -62,7 +62,10 @@ class ViewNameSelectedChecker(CheckerBase):
     @property
     def selected(self):
         """Selected if also view name compares."""
-        if self.view.__name__ == self.item.viewName:
+        viewName = self.item.viewName
+        if viewName.startswith('@@'):
+            viewName = viewName[2:]
+        if self.view.__name__ == viewName:
             return True
         return False
 
