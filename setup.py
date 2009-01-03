@@ -1,6 +1,6 @@
 ##############################################################################
 #
-# Copyright (c) 2007 Zope Foundation and Contributors.
+# Copyright (c) 2007-2009 Zope Foundation and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -11,10 +11,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-"""Setup
 
-$Id:$
-"""
 import os
 from setuptools import setup, find_packages
 
@@ -29,6 +26,10 @@ setup (
     description = "A ready to go menu for Zope3",
     long_description=(
         read('README.txt')
+        + '\n\n.. contents::\n\n' +
+        read('src', 'z3c', 'menu', 'ready2go', 'README.txt')
+        + '\n\n' +
+        read('src', 'z3c', 'menu', 'ready2go', 'zcml.txt')
         + '\n\n' +
         read('CHANGES.txt')
         ),
