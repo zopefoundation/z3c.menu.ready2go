@@ -20,7 +20,7 @@ def read(*rnames):
 
 setup (
     name='z3c.menu.ready2go',
-    version='0.5.1dev',
+    version='0.5.2dev',
     author = "Stephan Richter, Roger Ineichen and the Zope Community",
     author_email = "zope-dev@zope.org",
     description = "A ready to go menu for Zope3",
