@@ -3,18 +3,20 @@ CHANGES
 =======
 
 
-Version 0.5.1dev (unreleased)
------------------------------
+0.5.1 (2009-01-04)
+------------------
 
-- Add support for viewName's that start with ``@@``. They are now processed
-  properly by the ViewNameSelectedChecker.
+- Add support for viewNames that start with ``@@``. They are now
+  processed properly by the ViewNameSelectedChecker.
+
+- Added documentation to Pypi home page.
 
 
-Version 0.5.0 (2008-04-11)
---------------------------
+0.5.0 (2008-04-11)
+------------------
 
-- bugfix: fixed cssInActive usage. This was broken and ended in not using the 
-  cssInActive CSS class argument
+- bugfix: fixed cssInActive usage. This was broken and ended in not
+  using the cssInActive CSS class argument
 
 - added more tests, now we have 100% coverage
 
@@ -22,4 +24,4 @@ Version 0.5.0 (2008-04-11)
 
 - make template pluggable with z3c.template pattern
 
-- Initial Release
+- initial Release
