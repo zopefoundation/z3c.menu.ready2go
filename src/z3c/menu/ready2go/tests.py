@@ -22,7 +22,7 @@ from zope.testing import doctest
 from zope.testing.doctestunit import DocFileSuite
 from zope.traversing.browser.interfaces import IAbsoluteURL
 from zope.traversing.interfaces import IPhysicallyLocatable
-from zope.app.component import hooks
+from zope.site import hooks
 from zope.app.testing import setup
 
 import z3c.testing

@@ -2,7 +2,7 @@
 Ready 2 go Menu
 ===============
 
-The z3c.menu.ready2go package provides a menu implementation which allows you 
+The z3c.menu.ready2go package provides a menu implementation which allows you
 to implement menus based on content providers and viewlets.
 
 First let's setup our defualt menu item template:
@@ -75,12 +75,11 @@ and/or selected:
 Now we have to define a site and a context:
 
   >>> import zope.interface
-  >>> from zope.app.container import contained
-  >>> from zope.app.container import btree
-  >>> from zope.app.container.interfaces import IContained
+  >>> from zope.container import contained, btree
+  >>> from zope.container.interfaces import IContained
   >>> from zope.location.interfaces import IPossibleSite
-  >>> from zope.app.component.site import SiteManagerContainer
-  >>> from zope.app.component.site import LocalSiteManager
+  >>> from zope.site.site import SiteManagerContainer
+  >>> from zope.site.site import LocalSiteManager
 
   >>> class Site(btree.BTreeContainer, SiteManagerContainer):
   ...     zope.interface.implements(IPossibleSite)
@@ -94,11 +93,11 @@ Now we have to define a site and a context:
   >>> root['site'] = Site()
   >>> site = root['site']
 
-Now we have to set the site object as site. This is normaly done by the 
+Now we have to set the site object as site. This is normaly done by the
 traverser but we do this here with the hooks helper because we do not really
 traaverse to the site within the publisher/traverser:
 
-  >>> from zope.app.component import hooks
+  >>> from zope.site import hooks
   >>> hooks.setSite(site)
 
   >>> site['content'] = Content()
@@ -110,9 +109,9 @@ traaverse to the site within the publisher/traverser:
 And we need a view which knows about it's parent:
 
   >>> class View(contained.Contained):
-  ... 
+  ...
   ...     zope.interface.implements(IBrowserView)
-  ... 
+  ...
   ...     def __init__(self, context, request):
   ...         self.__parent__ = context
   ...         self.context = context
@@ -170,7 +169,7 @@ And we configure our menu item for IGlobalMenu. This is normaly done by the
   ...     IBrowserView, IGlobalMenu),
   ...     IViewlet, name='My Global')
 
-Now let's update the menu manager and see that this manager now contains 
+Now let's update the menu manager and see that this manager now contains
 the menu item:
 
   >>> globalMenu.update()
@@ -253,7 +252,7 @@ And we configure our menu item for IContextMenu. This is normaly done by the
   ...     IBrowserView, IContextMenu),
   ...     IViewlet, name='My Context')
 
-Now let's render the context menu again. You can see that we ve got a menu 
+Now let's render the context menu again. You can see that we ve got a menu
 item. Another important point here is, that the url of such ContextMemuItem
 implementations point to the context of the view:
 
@@ -278,7 +277,7 @@ Now try again and see if the context menu item get rendered as selected:
   </li>
 
 Also, let's check that menu item is marked selected even if we provided a viewName in
-the ``@@context.html`` form: 
+the ``@@context.html`` form:
 
   >>> MyContextMenuItem.viewName = '@@context.html'
   >>> contextMenu.update()
@@ -321,7 +320,7 @@ Now update and render again:
 AddMenu
 -------
 
-The add menu can be used for offering links to any kind of add forms per 
+The add menu can be used for offering links to any kind of add forms per
 context. This allows us to offer independent add form links doesn't matter which
 form framework is used. Let's now define such a simple AddMenuItem pointing
 to a add form url. Not; the add form and it's url do not exist in thsi test.
@@ -362,12 +361,12 @@ Menu groups
 
 The global and the site menu items are grouped menu items. This means such menu
 items should get rendered as selected if a context menu item is selected. This
-reflects the menu hierarchie. Let's show how we can solve this not so simple 
-problem. We offer a ISelectedChecker adapter which can decide if a menu get 
-rendered as selected or not. This is very usefull because normaly a menu get 
-registered and later we add views and can not change the menu item 
-implementation. Let's see how such an adapter can handle an existing menu, 
-context and view setup and change the selected rendering. We register a 
+reflects the menu hierarchie. Let's show how we can solve this not so simple
+problem. We offer a ISelectedChecker adapter which can decide if a menu get
+rendered as selected or not. This is very usefull because normaly a menu get
+registered and later we add views and can not change the menu item
+implementation. Let's see how such an adapter can handle an existing menu,
+context and view setup and change the selected rendering. We register a
 selected checker for our site menu item:
 
   >>> zope.component.provideAdapter(checker.TrueSelectedChecker,
@@ -383,7 +382,7 @@ sample content object.
     <a href="http://127.0.0.1/site/site.html"><span>My Site</span></a>
   </li>
 
-This reflects that the site menu is a group menu which the context menu item 
+This reflects that the site menu is a group menu which the context menu item
 of the content object is selected too.
 
   >>> contextMenu.update()
@@ -421,10 +420,10 @@ Special use case
 ----------------
 
 We have some special use case because of Zope's internals. One important part
-is that our menu heavy depend on context and it's __parent__ chain to the 
+is that our menu heavy depend on context and it's __parent__ chain to the
 zope application root. This is not allways supported by Zopes default setup.
 One part is the bad integrated application control part which fakes a root
-object which doesn't know about the real childs of the real root from the 
+object which doesn't know about the real childs of the real root from the
 ZODB e.g. application root. Now we will show you that our menu by default
 render no items if we get such a fake root which messes up our menu structure.
 

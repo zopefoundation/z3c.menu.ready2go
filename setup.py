@@ -53,7 +53,7 @@ setup (
     extras_require = dict(
         test = [
             'z3c.testing',
-            'zope.app.container',
+            'zope.container',
             'zope.app.pagetemplate',
             'zope.app.testing',
             'zope.component',
@@ -64,8 +64,6 @@ setup (
         'setuptools',
         'z3c.i18n',
         'z3c.template',
-        'zope.app.component',
-        'zope.app.pagetemplate',
         'zope.app.publisher',
         'zope.configuration',
         'zope.interface',
@@ -73,6 +71,7 @@ setup (
         'zope.publisher',
         'zope.schema',
         'zope.security',
+        'zope.site',
         'zope.traversing',
         'zope.viewlet',
         ],

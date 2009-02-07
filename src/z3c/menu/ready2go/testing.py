@@ -20,7 +20,7 @@ import zope.security
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.app.testing import setup
 from zope.app.testing import ztapi
-from zope.app.container import contained
+from zope.container import contained
 
 from z3c.menu.ready2go import interfaces
 from z3c.menu.ready2go import item

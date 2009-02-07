@@ -22,7 +22,7 @@ from zope.traversing.api import getRoot
 from zope.traversing.browser import absoluteURL
 
 from zope.viewlet import viewlet
-from zope.app.component import hooks
+from zope.site import hooks
 
 from z3c.template.template import getPageTemplate
 from z3c.menu.ready2go import interfaces
@@ -66,9 +66,9 @@ class MenuItem(viewlet.ViewletBase):
 
     def setupFilter(self):
         """Catch location error and set approved attributes.
-        
-        Note, this get called before update because the filter method in menu 
-        manager needs to know that before the menu items update method get 
+
+        Note, this get called before update because the filter method in menu
+        manager needs to know that before the menu items update method get
         called.
         """
         try:
@@ -86,7 +86,7 @@ class MenuItem(viewlet.ViewletBase):
 
     @property
     def css(self):
-        """Return cssActive, cssInActive or None. 
+        """Return cssActive, cssInActive or None.
 
         None will force not rendering a HTML attribute in the element tag.
         """
