@@ -26,7 +26,11 @@ from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.publisher.interfaces.browser import IBrowserView
 from zope.viewlet import viewlet
 from zope.viewlet.metadirectives import IViewletDirective
-from zope.app.publisher.browser import viewmeta
+
+from zope.browserpage.metaconfigure import _handle_permission
+from zope.browserpage.metaconfigure import _handle_allowed_attributes
+from zope.browserpage.metaconfigure import _handle_for
+from zope.browserpage.metaconfigure import _handle_allowed_interface
 
 from z3c.i18n import MessageFactory as _
 from z3c.menu.ready2go import interfaces
@@ -108,7 +112,7 @@ def menuItemDirective(
         kwargs['i18nTitle'] = title
 
     # Get the permission; mainly to correctly handle CheckerPublic.
-    permission = viewmeta._handle_permission(_context, permission)
+    permission = _handle_permission(_context, permission)
 
     # Either the class or template must be specified.
     if not (class_ or template):
@@ -166,19 +170,19 @@ def menuItemDirective(
                                                attributes=kwargs)
 
     # Set up permission mapping for various accessible attributes
-    viewmeta._handle_allowed_interface(
+    _handle_allowed_interface(
         _context, allowed_interface, permission, required)
-    viewmeta._handle_allowed_attributes(
+    _handle_allowed_attributes(
         _context, allowed_attributes, permission, required)
-    viewmeta._handle_allowed_attributes(
+    _handle_allowed_attributes(
         _context, kwargs.keys(), permission, required)
-    viewmeta._handle_allowed_attributes(
+    _handle_allowed_attributes(
         _context,
         (attribute, 'browserDefault', 'update', 'render', 'publishTraverse'),
         permission, required)
 
     # Register the interfaces.
-    viewmeta._handle_for(_context, for_)
+    _handle_for(_context, for_)
     zcml.interface(_context, view)
 
     # Create the security checker for the new class

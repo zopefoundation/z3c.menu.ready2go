@@ -2,10 +2,10 @@
 CHANGES
 =======
 
-0.6.1 (unreleased)
+0.7.0 (2009-11-30)
 ------------------
 
--
+- adjust dependencies and imports, reflect changes in zope packages
 
 
 0.6.0 (2009-02-07)

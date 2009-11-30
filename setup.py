@@ -20,7 +20,7 @@ def read(*rnames):
 
 setup (
     name='z3c.menu.ready2go',
-    version='0.6.1dev',
+    version='0.7.0',
     author = "Stephan Richter, Roger Ineichen and the Zope Community",
     author_email = "zope-dev@zope.org",
     description = "A ready to go menu for Zope3",
@@ -53,10 +53,12 @@ setup (
     extras_require = dict(
         test = [
             'z3c.testing',
-            'zope.container',
             'zope.app.pagetemplate',
             'zope.app.testing',
+            'zope.container',
+            'zope.contentprovider',
             'zope.component',
+            'zope.testing',
             'zope.traversing',
             ],
         ),
@@ -64,7 +66,8 @@ setup (
         'setuptools',
         'z3c.i18n',
         'z3c.template',
-        'zope.app.publisher',
+        'zope.browserpage',
+        'zope.component',
         'zope.configuration',
         'zope.interface',
         'zope.proxy',
