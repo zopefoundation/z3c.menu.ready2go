@@ -2,7 +2,7 @@
 CHANGES
 =======
 
-0.7.1 (unreleased)
+0.7.1 (2009-12-26)
 ------------------
 
 - Removed dependency on ``z3c.i18n`` by declaring the z3c
