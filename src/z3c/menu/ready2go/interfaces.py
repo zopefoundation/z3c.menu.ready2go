@@ -15,21 +15,20 @@
 $Id: layer.py 197 2007-04-13 05:03:32Z rineichen $
 """
 
+from z3c.menu.ready2go.i18n import MessageFactory as _
 import zope.interface
 import zope.schema
-from zope.viewlet import interfaces
-
-from z3c.i18n import MessageFactory as _
+import zope.viewlet.interfaces
 
 
-class IMenuManager(interfaces.IViewletManager):
+class IMenuManager(zope.viewlet.interfaces.IViewletManager):
     """Generic nenu manager."""
 
     def render():
         """Represent the menu"""
 
 
-class IMenuItem(interfaces.IViewlet):
+class IMenuItem(zope.viewlet.interfaces.IViewlet):
     """Menu item base."""
 
     template = zope.interface.Attribute("""Page template""")

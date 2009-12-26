@@ -58,13 +58,11 @@ setup (
             'zope.container',
             'zope.contentprovider',
             'zope.component',
-            'zope.testing',
             'zope.traversing',
             ],
         ),
     install_requires = [
         'setuptools',
-        'z3c.i18n',
         'z3c.template',
         'zope.browserpage',
         'zope.component',

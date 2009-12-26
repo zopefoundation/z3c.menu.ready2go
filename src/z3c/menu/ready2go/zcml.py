@@ -32,10 +32,10 @@ from zope.browserpage.metaconfigure import _handle_allowed_attributes
 from zope.browserpage.metaconfigure import _handle_for
 from zope.browserpage.metaconfigure import _handle_allowed_interface
 
-from z3c.i18n import MessageFactory as _
-from z3c.menu.ready2go import interfaces
 from z3c.menu.ready2go import checker
+from z3c.menu.ready2go import interfaces
 from z3c.menu.ready2go import item
+from z3c.menu.ready2go.i18n import MessageFactory as _
 
 
 class IMenuSelectorDirective(zope.interface.Interface):

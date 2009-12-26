@@ -2,10 +2,20 @@
 CHANGES
 =======
 
+0.7.1 (unreleased)
+------------------
+
+- Removed dependency on ``z3c.i18n`` by declaring the z3c
+  `MessageFactory` locally.
+
+- Using python ``doctest`` module instead of
+  ``zope.testing.doctestunit`` as it deprecated now.
+
+
 0.7.0 (2009-11-30)
 ------------------
 
-- adjust dependencies and imports, reflect changes in zope packages
+- Adjust dependencies and imports, to reflect changes in zope packages.
 
 
 0.6.0 (2009-02-07)
