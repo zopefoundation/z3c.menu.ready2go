@@ -53,7 +53,7 @@ setup (
     extras_require = dict(
         test = [
             'z3c.testing',
-            'zope.app.pagetemplate',
+            'zope.browserpage',
             'zope.app.testing',
             'zope.container',
             'zope.contentprovider',

@@ -88,7 +88,7 @@ def setUp(test):
     root = setup.placefulSetUp(site=True)
     test.globs['root'] = root
 
-    from zope.app.pagetemplate import metaconfigure
+    from zope.browserpage import metaconfigure
     from zope.contentprovider import tales
     metaconfigure.registerType('provider', tales.TALESProviderExpression)
 

@@ -5,7 +5,9 @@ CHANGES
 0.7.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Replaced `zope.app.pagetemplate` test dependency by
+  `zope.browserpage` as the needed ``metaconfigure.registerType`` has
+  been moved there lately without leaving a BBB import.
 
 
 0.7.1 (2009-12-26)
