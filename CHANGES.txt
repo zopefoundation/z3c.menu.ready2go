@@ -2,7 +2,7 @@
 CHANGES
 =======
 
-0.7.2 (unreleased)
+0.8.0 (2010-07-12)
 ------------------
 
 - Replaced `zope.app.pagetemplate` test dependency by
