@@ -77,7 +77,7 @@ Now we have to define a site and a context:
   >>> import zope.interface
   >>> from zope.container import contained, btree
   >>> from zope.container.interfaces import IContained
-  >>> from zope.location.interfaces import IPossibleSite
+  >>> from zope.component.interfaces import IPossibleSite
   >>> from zope.site.site import SiteManagerContainer
   >>> from zope.site.site import LocalSiteManager
 
