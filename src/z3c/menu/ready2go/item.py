@@ -11,11 +11,8 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+"""Menu Item
 """
-$Id: layer.py 197 2007-04-13 05:03:32Z rineichen $
-"""
-__docformat__ = "reStructuredText"
-
 import zope.interface
 import zope.proxy
 from zope.traversing.api import getRoot
@@ -125,16 +122,14 @@ class MenuItem(viewlet.ViewletBase):
         return '<%s %r>' % (self.__class__.__name__, self.__name__)
 
 
+@zope.interface.implementer(interfaces.IGlobalMenuItem)
 class GlobalMenuItem(MenuItem):
     """Global menu item."""
 
-    zope.interface.implements(interfaces.IGlobalMenuItem)
 
-
+@zope.interface.implementer(interfaces.ISiteMenuItem)
 class SiteMenuItem(MenuItem):
     """Site menu item."""
-
-    zope.interface.implements(interfaces.ISiteMenuItem)
 
     @property
     def available(self):
@@ -147,19 +142,17 @@ class SiteMenuItem(MenuItem):
         return hooks.getSite()
 
 
+@zope.interface.implementer(interfaces.IContextMenuItem)
 class ContextMenuItem(MenuItem):
     """Context menu item."""
-
-    zope.interface.implements(interfaces.IContextMenuItem)
 
     def getURLContext(self):
         return self.context
 
 
+@zope.interface.implementer(interfaces.IAddMenuItem)
 class AddMenuItem(MenuItem):
     """Add menu item."""
-
-    zope.interface.implements(interfaces.IAddMenuItem)
 
     subMenuProviderName = None
 

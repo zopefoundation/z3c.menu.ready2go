@@ -11,25 +11,34 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+"""Test Setup
 """
-$Id: __init__.py 97 2007-03-29 22:58:27Z rineichen $
-"""
-
 import doctest
+import re
 import unittest
 import zope.interface
 import zope.component
+from zope.interface.verify import verifyClass, verifyObject
+from zope.testing import renormalizing
 from zope.traversing.browser.interfaces import IAbsoluteURL
 from zope.traversing.interfaces import IPhysicallyLocatable
 from zope.site import hooks
-from zope.app.testing import setup
+from zope.site.testing import siteSetUp, siteTearDown
 
-import z3c.testing
-from z3c.menu.ready2go import interfaces
-from z3c.menu.ready2go import item
-from z3c.menu.ready2go import manager
-from z3c.menu.ready2go import testing
+from z3c.menu.ready2go import interfaces, item, manager, testing
 
+checker = renormalizing.RENormalizing([
+    # Python 3 unicode removed the "u".
+    (re.compile("u('.*?')"),
+     r"\1"),
+    (re.compile('u(".*?")'),
+     r"\1"),
+    ])
+
+
+flags = doctest.NORMALIZE_WHITESPACE|\
+        doctest.ELLIPSIS|\
+        doctest.IGNORE_EXCEPTION_DETAIL
 
 class CheckerStub(object):
     """Just a checker stub."""
@@ -50,12 +59,11 @@ class CheckerStub(object):
         return True
 
 
+@zope.interface.implementer(IPhysicallyLocatable)
 class ParentStub(object):
     """Just an object supporting a context attribtute."""
 
     __name__ = __parent__ = context = None
-
-    zope.interface.implements(IPhysicallyLocatable)
 
     def __init__(self, path=('a', 'b')):
         self.path = path
@@ -79,7 +87,22 @@ class AbsoulteURLStub(object):
     __call__ = __str__
 
 
-class MenuManagerTest(z3c.testing.InterfaceBaseTest):
+class InterfaceBaseTest(unittest.TestCase):
+    """Base test for IContainer including interface test."""
+
+    def makeTestObject(self):
+        return self.getTestClass()(*self.getTestPos())
+
+    def test_verifyClass(self):
+        # class test
+        self.assert_(verifyClass(self.getTestInterface(), self.getTestClass()))
+
+    def test_verifyObject(self):
+        # object test
+        self.assert_(verifyObject(self.getTestInterface(),
+            self.makeTestObject()))
+
+class MenuManagerTest(InterfaceBaseTest):
 
     def getTestInterface(self):
         return interfaces.IMenuManager
@@ -91,16 +114,19 @@ class MenuManagerTest(z3c.testing.InterfaceBaseTest):
         return (None, None, None)
 
 
-class GlobalMenuItemTest(z3c.testing.InterfaceBaseTest):
+class GlobalMenuItemTest(InterfaceBaseTest):
 
     def setUp(self):
-        site = setup.placefulSetUp(site=True)
+        site = siteSetUp(True)
         hooks.setSite(site)
         zope.component.provideAdapter(AbsoulteURLStub, (None, None),
             IAbsoluteURL)
         zope.component.provideAdapter(CheckerStub, (None, None, None, None,
             None), interfaces.ISelectedChecker)
         super(GlobalMenuItemTest, self).setUp()
+
+    def tearDown(self):
+        siteTearDown()
 
     def getTestInterface(self):
         return interfaces.IGlobalMenuItem
@@ -112,16 +138,18 @@ class GlobalMenuItemTest(z3c.testing.InterfaceBaseTest):
         return (ParentStub(), None, ParentStub(), None)
 
 
-class SiteMenuItemTest(z3c.testing.InterfaceBaseTest):
+class SiteMenuItemTest(InterfaceBaseTest):
 
     def setUp(self):
-        site = setup.placefulSetUp(site=True)
+        site = siteSetUp(True)
         hooks.setSite(site)
         zope.component.provideAdapter(AbsoulteURLStub, (None, None),
             IAbsoluteURL)
         zope.component.provideAdapter(CheckerStub, (None, None, None, None,
             None), interfaces.ISelectedChecker)
-        super(SiteMenuItemTest, self).setUp()
+
+    def tearDown(self):
+        siteTearDown()
 
     def getTestInterface(self):
         return interfaces.ISiteMenuItem
@@ -133,12 +161,17 @@ class SiteMenuItemTest(z3c.testing.InterfaceBaseTest):
         return (ParentStub(), None, ParentStub(), None)
 
 
-class ContextMenuItemTest(z3c.testing.InterfaceBaseTest):
+class ContextMenuItemTest(InterfaceBaseTest):
 
     def setUp(self):
+        zope.component.testing.setUp()
+        zope.component.provideAdapter(AbsoulteURLStub, (None, None),
+            IAbsoluteURL)
         zope.component.provideAdapter(CheckerStub, (None, None, None, None,
             None), interfaces.ISelectedChecker)
-        super(ContextMenuItemTest, self).setUp()
+
+    def tearDown(self):
+        zope.component.testing.tearDown()
 
     def getTestInterface(self):
         return interfaces.IContextMenuItem
@@ -154,11 +187,11 @@ def test_suite():
     return unittest.TestSuite((
         doctest.DocFileSuite('README.txt',
             setUp=testing.setUp, tearDown=testing.tearDown,
-            optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+            optionflags=flags, checker=checker
             ),
         doctest.DocFileSuite('zcml.txt',
             setUp=testing.setUp, tearDown=testing.tearDown,
-            optionflags=doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS,
+            optionflags=flags, checker=checker
             ),
         unittest.makeSuite(MenuManagerTest),
         unittest.makeSuite(GlobalMenuItemTest),

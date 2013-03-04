@@ -11,10 +11,8 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+"""Interfaces
 """
-$Id: layer.py 197 2007-04-13 05:03:32Z rineichen $
-"""
-
 from z3c.menu.ready2go.i18n import MessageFactory as _
 import zope.interface
 import zope.schema

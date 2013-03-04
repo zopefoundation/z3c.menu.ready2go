@@ -81,14 +81,15 @@ Now we have to define a site and a context:
   >>> from zope.site.site import SiteManagerContainer
   >>> from zope.site.site import LocalSiteManager
 
-  >>> class Site(btree.BTreeContainer, SiteManagerContainer):
-  ...     zope.interface.implements(IPossibleSite)
+  >>> @zope.interface.implementer(IPossibleSite)
+  ... class Site(btree.BTreeContainer, SiteManagerContainer):
   ...     def __init__(self):
   ...         super(Site, self).__init__()
   ...         self.setSiteManager(LocalSiteManager(self))
 
-  >>> class Content(contained.Contained):
-  ...     zope.interface.implements(IContained)
+  >>> @zope.interface.implementer(IContained)
+  ... class Content(contained.Contained):
+  ...     pass
 
   >>> root['site'] = Site()
   >>> site = root['site']
@@ -108,9 +109,8 @@ traaverse to the site within the publisher/traverser:
 
 And we need a view which knows about it's parent:
 
-  >>> class View(contained.Contained):
-  ...
-  ...     zope.interface.implements(IBrowserView)
+  >>> @zope.interface.implementer(IBrowserView)
+  ... class View(contained.Contained):
   ...
   ...     def __init__(self, context, request):
   ...         self.__parent__ = context
@@ -180,7 +180,7 @@ the menu item:
 Now let's render the global menu manager and you can see that the menu item
 get rendered:
 
-  >>> print globalMenu.render()
+  >>> print(globalMenu.render())
   <li>
     <a href="http://127.0.0.1/root.html"><span>My Global</span></a>
   </li>
@@ -218,7 +218,7 @@ Now let's render the site menu again. You can see that we ve got a menu item
 and the url points to our site:
 
   >>> siteMenu.update()
-  >>> print siteMenu.render()
+  >>> print(siteMenu.render())
   <li>
     <a href="http://127.0.0.1/site/site.html"><span>My Site</span></a>
   </li>
@@ -234,8 +234,8 @@ Now we register a context menu item for our IContextMenu:
 
   >>> from z3c.menu.ready2go.item import ContextMenuItem
   >>> class MyContextMenuItem(ContextMenuItem):
-  ...
   ...     viewName = 'context.html'
+  ...     weight = 1
 
 Now we need a security checker for our menu item
 
@@ -257,7 +257,7 @@ item. Another important point here is, that the url of such ContextMemuItem
 implementations point to the context of the view:
 
   >>> contextMenu.update()
-  >>> print contextMenu.render()
+  >>> print(contextMenu.render())
   <li>
     <a href="http://127.0.0.1/site/content/context.html"><span>My Context</span></a>
   </li>
@@ -271,7 +271,7 @@ selected:
 Now try again and see if the context menu item get rendered as selected:
 
   >>> contextMenu.update()
-  >>> print contextMenu.render()
+  >>> print(contextMenu.render())
   <li class="selected">
     <a href="http://127.0.0.1/site/content/context.html"><span>My Context</span></a>
   </li>
@@ -281,7 +281,7 @@ the ``@@context.html`` form:
 
   >>> MyContextMenuItem.viewName = '@@context.html'
   >>> contextMenu.update()
-  >>> print contextMenu.render()
+  >>> print(contextMenu.render())
   <li class="selected">
     <a href="http://127.0.0.1/site/content/@@context.html"><span>My Context</span></a>
   </li>
@@ -294,9 +294,9 @@ Now add a second context menu item and check if we can use the cssInActive
 argument which is normaly a empty string:
 
   >>> class InActiveMenuItem(ContextMenuItem):
-  ...
   ...     viewName = 'inActive.html'
   ...     cssInActive = 'inActive'
+  ...     weight = 2
 
   >>> defineChecker(InActiveMenuItem, viewletChecker)
 
@@ -309,7 +309,7 @@ argument which is normaly a empty string:
 Now update and render again:
 
   >>> contextMenu.update()
-  >>> print contextMenu.render()
+  >>> print(contextMenu.render())
   <li class="selected">
     <a href="http://127.0.0.1/site/content/context.html"><span>My Context</span></a>
   </li>
@@ -350,7 +350,7 @@ And we configure our menu item for IAddMenu. This is normaly done by the
 Now we can update and render our add menu:
 
   >>> addMenu.update()
-  >>> print addMenu.render()
+  >>> print(addMenu.render())
   <li>
     <a href="http://127.0.0.1/site/content/addSomething.html"><span>My AddMenu</span></a>
   </li>
@@ -377,7 +377,7 @@ Now we can render the site menu again. Note that our context is still the
 sample content object.
 
   >>> siteMenu.update()
-  >>> print siteMenu.render()
+  >>> print(siteMenu.render())
   <li class="selected">
     <a href="http://127.0.0.1/site/site.html"><span>My Site</span></a>
   </li>
@@ -386,7 +386,7 @@ This reflects that the site menu is a group menu which the context menu item
 of the content object is selected too.
 
   >>> contextMenu.update()
-  >>> print contextMenu.render()
+  >>> print(contextMenu.render())
   <li class="selected">
     <a href="http://127.0.0.1/site/content/context.html"><span>My Context</span></a>
   </li>
@@ -404,7 +404,7 @@ menu managers.
   >>> from z3c.menu.ready2go.manager import EmptyMenuManager
   >>> emptyMenu = EmptyMenuManager(None, None, None)
 
-Our empty menu manager implements IMenuManager:
+Our empty menu manager implements ``IMenuManager``:
 
   >>> interfaces.IMenuManager.providedBy(emptyMenu)
   True

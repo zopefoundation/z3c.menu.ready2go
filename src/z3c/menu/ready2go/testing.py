@@ -11,19 +11,14 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+"""Testing Support
 """
-$Id: tests.py 82943 2008-01-18 10:01:06Z rogerineichen $
-"""
-__docformat__ = 'restructuredtext'
-
 import zope.security
-from zope.publisher.interfaces.browser import IBrowserView
-from zope.app.testing import setup
-from zope.app.testing import ztapi
 from zope.container import contained
+from zope.publisher.interfaces.browser import IBrowserView
+from zope.site.testing import siteSetUp, siteTearDown
 
-from z3c.menu.ready2go import interfaces
-from z3c.menu.ready2go import item
+from z3c.menu.ready2go import interfaces, item
 
 
 class TestParticipation(object):
@@ -35,18 +30,16 @@ class ISample(zope.interface.Interface):
     """Sample context interface."""
 
 
+@zope.interface.implementer(ISample)
 class Sample(object):
     """Sample context object."""
-
-    zope.interface.implements(ISample)
 
     def __init__(self, title):
         self.title = title
 
 
+@zope.interface.implementer(IBrowserView)
 class LocatableView(contained.Contained):
-
-    zope.interface.implements(IBrowserView)
 
     def __init__(self, context, request):
         self.__parent__ = context
@@ -59,15 +52,13 @@ class IFirstView(IBrowserView):
 class ISecondView(IBrowserView):
     """Second sample view interface."""
 
+@zope.interface.implementer(IFirstView)
 class FirstView(LocatableView):
     """First view."""
 
-    zope.interface.implements(IFirstView)
-
+@zope.interface.implementer(ISecondView)
 class SecondView(LocatableView):
     """Second view."""
-
-    zope.interface.implements(ISecondView)
 
 
 class IFirstMenu(interfaces.IMenuManager):
@@ -79,21 +70,27 @@ class ISecondMenu(interfaces.IMenuManager):
 
 class FirstMenuItem(item.ContextMenuItem):
     viewName = 'first.html'
+    weight = 1
 
 class SecondMenuItem(item.ContextMenuItem):
     viewName = 'second.html'
-
+    weight = 2
 
 def setUp(test):
-    root = setup.placefulSetUp(site=True)
+    root = siteSetUp(True)
     test.globs['root'] = root
+
+    from zope.traversing.testing import setUp
+    setUp()
 
     from zope.browserpage import metaconfigure
     from zope.contentprovider import tales
     metaconfigure.registerType('provider', tales.TALESProviderExpression)
 
+    zope.security.management.newInteraction()
     zope.security.management.getInteraction().add(TestParticipation())
 
 
 def tearDown(test):
-    setup.placefulTearDown()
+    zope.security.management.endInteraction()
+    siteTearDown()

@@ -117,22 +117,22 @@ items. but you can see that this menu items are not selected:
 
   >>> firstMenu = FirstMenu(sampleContent, request, firstView)
   >>> firstMenu.update()
-  >>> print firstMenu.render()
-  <li>
-    <a><span>Second Menu</span></a>
-  </li>
+  >>> print(firstMenu.render())
   <li>
     <a><span>First Menu</span></a>
+  </li>
+  <li>
+    <a><span>Second Menu</span></a>
   </li>
 
   >>> secondMenu = SecondMenu(sampleContent, request, firstView)
   >>> secondMenu.update()
-  >>> print secondMenu.render()
-  <li>
-    <a><span>Second Menu</span></a>
-  </li>
+  >>> print(secondMenu.render())
   <li>
     <a><span>First Menu</span></a>
+  </li>
+  <li>
+    <a><span>Second Menu</span></a>
   </li>
 
 Now we can register a menu selector for our page whihc renders the menu
@@ -154,22 +154,22 @@ see that the first menu get rendered as selected on the first menu:
 
   >>> firstMenu = FirstMenu(sampleContent, request, firstView)
   >>> firstMenu.update()
-  >>> print firstMenu.render()
-  <li>
-    <a><span>Second Menu</span></a>
-  </li>
+  >>> print(firstMenu.render())
   <li class="selected">
     <a><span>First Menu</span></a>
+  </li>
+  <li>
+    <a><span>Second Menu</span></a>
   </li>
 
 But not on the second menu:
 
   >>> secondMenu = SecondMenu(sampleContent, request, firstView)
   >>> secondMenu.update()
-  >>> print secondMenu.render()
-  <li>
-    <a><span>Second Menu</span></a>
-  </li>
+  >>> print(secondMenu.render())
   <li>
     <a><span>First Menu</span></a>
+  </li>
+  <li>
+    <a><span>Second Menu</span></a>
   </li>

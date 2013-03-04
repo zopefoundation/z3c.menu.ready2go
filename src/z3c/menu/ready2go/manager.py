@@ -11,11 +11,8 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+"""Menu Manager
 """
-$Id: layer.py 197 2007-04-13 05:03:32Z rineichen $
-"""
-__docformat__ = "reStructuredText"
-
 import zope.interface
 import zope.security
 from zope.viewlet import manager
@@ -30,10 +27,9 @@ def isAvailable(viewlet):
         return True
 
 
+@zope.interface.implementer(interfaces.IMenuManager)
 class MenuManager(manager.ConditionalViewletManager):
     """Menu manager for all kind of menu items"""
-
-    zope.interface.implements(interfaces.IMenuManager)
 
     def filter(self, viewlets):
         """Sort out all viewlets which are explicit not available
@@ -44,10 +40,9 @@ class MenuManager(manager.ConditionalViewletManager):
                 if isAvailable(viewlet)]
 
 
+@zope.interface.implementer(interfaces.IMenuManager)
 class EmptyMenuManager(object):
     """Empty menu manager."""
-
-    zope.interface.implements(interfaces.IMenuManager)
 
     def __init__(self, context, request, view):
         self.__updated = False

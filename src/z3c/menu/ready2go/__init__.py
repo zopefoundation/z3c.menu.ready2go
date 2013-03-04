@@ -11,8 +11,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-"""
-$Id: layer.py 197 2007-04-13 05:03:32Z rineichen $
+"""Base Interfaces.
 """
 
 from z3c.menu.ready2go import interfaces

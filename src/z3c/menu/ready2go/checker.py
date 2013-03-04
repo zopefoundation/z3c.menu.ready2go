@@ -11,10 +11,8 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+"""Menu Item "Selected Checker"
 """
-$Id: layer.py 197 2007-04-13 05:03:32Z rineichen $
-"""
-
 import zope.interface
 import zope.component
 from zope.publisher.interfaces.browser import IBrowserRequest
@@ -34,30 +32,27 @@ class CheckerBase(object):
 
 
 # ISelectedChecker
+@zope.interface.implementer(interfaces.ISelectedChecker)
 class FalseSelectedChecker(CheckerBase):
     """False selected checker can avoid selected menu item rendering."""
-
-    zope.interface.implements(interfaces.ISelectedChecker)
 
     @property
     def selected(self):
         return False
 
 
+@zope.interface.implementer(interfaces.ISelectedChecker)
 class TrueSelectedChecker(CheckerBase):
     """True selected checker can force selected menu item rendering."""
-
-    zope.interface.implements(interfaces.ISelectedChecker)
 
     @property
     def selected(self):
         return True
 
 
+@zope.interface.implementer(interfaces.ISelectedChecker)
 class ViewNameSelectedChecker(CheckerBase):
     """Selected by view name offers a generic checker for IContextMenuItem."""
-
-    zope.interface.implements(interfaces.ISelectedChecker)
 
     @property
     def selected(self):

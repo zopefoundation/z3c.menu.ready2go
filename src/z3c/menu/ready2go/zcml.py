@@ -11,11 +11,8 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+"""Menu ZCML Directives
 """
-$Id:$
-"""
-__docformat__ = "reStructuredText"
-
 import zope.interface
 import zope.configuration.fields
 import zope.security.checker
