@@ -31,7 +31,7 @@ TESTS_REQUIRE = [
 
 setup (
     name='z3c.menu.ready2go',
-    version='1.0.0',
+    version='1.0.1.dev0',
     author = "Stephan Richter, Roger Ineichen and the Zope Community",
     author_email = "zope-dev@zope.org",
     description = "A ready to go menu for Zope3",
