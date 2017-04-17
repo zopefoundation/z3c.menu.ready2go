@@ -2,10 +2,10 @@
 CHANGES
 =======
 
-1.0.0a2 (unreleased)
---------------------
+1.0.0 (unreleased)
+------------------
 
-- Claim Python 3.4 support.
+- Pin Python support to 2.7, 3.5, 3.6 and PyPy.
 
 
 1.0.0a1 (2013-03-03)
