@@ -19,7 +19,7 @@ from zope.traversing.api import getRoot
 from zope.traversing.browser import absoluteURL
 
 from zope.viewlet import viewlet
-from zope.site import hooks
+from zope.component import hooks
 
 from z3c.template.template import getPageTemplate
 from z3c.menu.ready2go import interfaces

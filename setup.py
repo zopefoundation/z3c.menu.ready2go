@@ -76,7 +76,7 @@ setup (
         'setuptools',
         'z3c.template',
         'zope.browserpage',
-        'zope.component',
+        'zope.component >= 3.8',
         'zope.configuration',
         'zope.interface',
         'zope.proxy',

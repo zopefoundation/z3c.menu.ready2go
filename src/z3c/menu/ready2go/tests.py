@@ -22,7 +22,7 @@ from zope.interface.verify import verifyClass, verifyObject
 from zope.testing import renormalizing
 from zope.traversing.browser.interfaces import IAbsoluteURL
 from zope.traversing.interfaces import IPhysicallyLocatable
-from zope.site import hooks
+from zope.component import hooks
 from zope.site.testing import siteSetUp, siteTearDown
 
 from z3c.menu.ready2go import interfaces, item, manager, testing
@@ -95,12 +95,14 @@ class InterfaceBaseTest(unittest.TestCase):
 
     def test_verifyClass(self):
         # class test
-        self.assert_(verifyClass(self.getTestInterface(), self.getTestClass()))
+        self.assertTrue(
+            verifyClass(self.getTestInterface(), self.getTestClass()))
 
     def test_verifyObject(self):
         # object test
-        self.assert_(verifyObject(self.getTestInterface(),
-            self.makeTestObject()))
+        self.assertTrue(
+            verifyObject(self.getTestInterface(), self.makeTestObject()))
+
 
 class MenuManagerTest(InterfaceBaseTest):
 

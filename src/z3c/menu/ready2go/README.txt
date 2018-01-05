@@ -98,7 +98,7 @@ Now we have to set the site object as site. This is normaly done by the
 traverser but we do this here with the hooks helper because we do not really
 traaverse to the site within the publisher/traverser:
 
-  >>> from zope.site import hooks
+  >>> from zope.component import hooks
   >>> hooks.setSite(site)
 
   >>> site['content'] = Content()
