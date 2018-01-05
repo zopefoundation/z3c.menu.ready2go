@@ -27,6 +27,7 @@ TESTS_REQUIRE = [
     'zope.site',
     'zope.traversing',
     'zope.testing',
+    'zope.testrunner',
     ]
 
 setup (
