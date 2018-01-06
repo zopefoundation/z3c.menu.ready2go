@@ -1,2 +1,2 @@
-This package provides a ready 2 go menu implementation based on viewlets for 
-Zope3.
+This package provides a "ready-to-go" menu implementation based on viewlets for 
+Zope 3.
