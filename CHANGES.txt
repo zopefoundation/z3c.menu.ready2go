@@ -5,7 +5,7 @@ CHANGES
 1.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix proxy unwrap breaking when using pure python proxy implementation.
 
 
 1.0.0 (2017-04-17)

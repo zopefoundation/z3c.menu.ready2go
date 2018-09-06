@@ -14,7 +14,7 @@
 """Menu Item
 """
 import zope.interface
-import zope.proxy
+import zope.security.proxy
 from zope.traversing.api import getRoot
 from zope.traversing.browser import absoluteURL
 
@@ -134,8 +134,8 @@ class SiteMenuItem(MenuItem):
     @property
     def available(self):
         """Available checker call"""
-        root = zope.proxy.getProxiedObject(getRoot(self.context))
-        site = zope.proxy.getProxiedObject(hooks.getSite())
+        root = zope.security.proxy.getObject(getRoot(self.context))
+        site = zope.security.proxy.getObject(hooks.getSite())
         return site is not root
 
     def getURLContext(self):
