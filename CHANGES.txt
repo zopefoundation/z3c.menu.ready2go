@@ -6,6 +6,7 @@ CHANGES
 ------------------
 
 - Fix proxy unwrap breaking when using pure python proxy implementation.
+  (`#2 <https://github.com/zopefoundation/z3c.menu.ready2go/pull/2>`_)
 
 
 1.0.0 (2017-04-17)
