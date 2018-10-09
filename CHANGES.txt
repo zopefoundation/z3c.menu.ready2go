@@ -2,10 +2,12 @@
 CHANGES
 =======
 
-1.0.1 (unreleased)
+1.1.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add support for Python 3.7.
+
+- Remove all deprecation warnings.
 
 
 1.0.0 (2017-04-17)

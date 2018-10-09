@@ -32,7 +32,7 @@ TESTS_REQUIRE = [
 
 setup (
     name='z3c.menu.ready2go',
-    version='1.0.1.dev0',
+    version='1.1.0.dev0',
     author = "Stephan Richter, Roger Ineichen and the Zope Community",
     author_email = "zope-dev@zope.org",
     description = "A ready to go menu for Zope3",
@@ -58,6 +58,7 @@ setup (
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Natural Language :: English',
