@@ -102,14 +102,15 @@ class MenuItem(viewlet.ViewletBase):
     @property
     def selected(self):
         """Selected checker call"""
-        checker = zope.component.getMultiAdapter((self.context, self.request,
-            self.view, self.manager, self), interfaces.ISelectedChecker)
+        checker = zope.component.getMultiAdapter(
+            (self.context, self.request, self.view, self.manager, self),
+            interfaces.ISelectedChecker)
         return checker.selected
 
     @property
     def url(self):
         return '%s/%s' % (absoluteURL(self.getURLContext(), self.request),
-            self.viewName)
+                          self.viewName)
 
     def getURLContext(self):
         return getRoot(self.context)

@@ -68,36 +68,33 @@ class ViewNameSelectedChecker(CheckerBase):
 # default selected checkers
 class GlobalSelectedChecker(FalseSelectedChecker):
     """Global menu item selected checker.
-    
+
     Note, this is a menu group which is selected on different menu items.
     You need to register for each view a TrueSelectedChecker if the site menu
     item should get rendered as selected.
     """
 
     zope.component.adapts(zope.interface.Interface, IBrowserRequest,
-        zope.interface.Interface, interfaces.IMenuManager,
-        interfaces.IGlobalMenuItem)
+                          zope.interface.Interface, interfaces.IMenuManager,
+                          interfaces.IGlobalMenuItem)
 
 
 class SiteSelectedChecker(FalseSelectedChecker):
     """Site menu item selected checker.
-    
+
     Note, this is a menu group which is selected on different menu items.
     You need to register for each view a TrueSelectedChecker if the site menu
     item should get rendered as selected.
     """
 
     zope.component.adapts(zope.interface.Interface, IBrowserRequest,
-        zope.interface.Interface, interfaces.IMenuManager,
-        interfaces.ISiteMenuItem)
+                          zope.interface.Interface, interfaces.IMenuManager,
+                          interfaces.ISiteMenuItem)
 
 
 class ContextSelectedChecker(ViewNameSelectedChecker):
     """Context menu item selected checker."""
 
     zope.component.adapts(zope.interface.Interface, IBrowserRequest,
-        zope.interface.Interface, interfaces.IMenuManager,
-        interfaces.IContextMenuItem)
-
-
-
+                          zope.interface.Interface, interfaces.IMenuManager,
+                          interfaces.IContextMenuItem)

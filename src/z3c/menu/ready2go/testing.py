@@ -46,15 +46,19 @@ class LocatableView(contained.Contained):
         self.context = context
         self.request = request
 
+
 class IFirstView(IBrowserView):
     """First sample view interface."""
+
 
 class ISecondView(IBrowserView):
     """Second sample view interface."""
 
+
 @zope.interface.implementer(IFirstView)
 class FirstView(LocatableView):
     """First view."""
+
 
 @zope.interface.implementer(ISecondView)
 class SecondView(LocatableView):
@@ -64,6 +68,7 @@ class SecondView(LocatableView):
 class IFirstMenu(interfaces.IMenuManager):
     """First menu manager."""
 
+
 class ISecondMenu(interfaces.IMenuManager):
     """Second menu manager."""
 
@@ -72,9 +77,11 @@ class FirstMenuItem(item.ContextMenuItem):
     viewName = 'first.html'
     weight = 1
 
+
 class SecondMenuItem(item.ContextMenuItem):
     viewName = 'second.html'
     weight = 2
+
 
 def setUp(test):
     root = siteSetUp(True)
