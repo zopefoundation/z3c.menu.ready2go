@@ -36,9 +36,11 @@ checker = renormalizing.RENormalizing([
 ])
 
 
-flags = doctest.NORMALIZE_WHITESPACE |\
-    doctest.ELLIPSIS |\
-    doctest.IGNORE_EXCEPTION_DETAIL
+flags = (
+    doctest.NORMALIZE_WHITESPACE
+    | doctest.ELLIPSIS
+    | doctest.IGNORE_EXCEPTION_DETAIL
+)
 
 
 class CheckerStub(object):
