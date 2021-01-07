@@ -41,61 +41,61 @@ class IMenuItem(zope.viewlet.interfaces.IViewlet):
         title=_('Title'),
         description=_('Menu item title'),
         default=u''
-        )
+    )
 
     viewName = zope.schema.TextLine(
         title=_('View name'),
         description=_('Name of the view which the menu points to.'),
         default=u''
-        )
+    )
 
     weight = zope.schema.TextLine(
         title=_('Weight'),
         description=_('Weight of the menu item order.'),
         default=u''
-        )
+    )
 
     cssActive = zope.schema.TextLine(
         title=_('Active CSS class name'),
         description=_('CSS class name for active menu items'),
         default=u''
-        )
+    )
 
     cssInActive = zope.schema.TextLine(
         title=_('In-Active CSS class name'),
         description=_('CSS class name for inactive menu items'),
         default=u''
-        )
+    )
 
     css = zope.schema.TextLine(
         title=_('CSS class name'),
         description=_('CSS class name'),
         default=u''
-        )
+    )
 
     available = zope.schema.Bool(
         title=_('Available'),
         description=_('Marker for available menu item'),
         default=True
-        )
+    )
 
     selected = zope.schema.Bool(
         title=_('Selected'),
         description=_('Marker for selected menu item'),
         default=False
-        )
+    )
 
     url = zope.schema.TextLine(
         title=_('URL'),
         description=_('URL or other url like javascript function.'),
         default=u''
-        )
+    )
 
     subMenuProviderName = zope.schema.TextLine(
         title=_('Sub menu provider name'),
         description=_('Name of the sub menu provider.'),
         default=u''
-        )
+    )
 
     def getURLContext():
         """Returns the context the base url."""
@@ -111,7 +111,7 @@ class ISelectedChecker(zope.interface.Interface):
         title=_('Selected'),
         description=_('Marker for selected menu item'),
         default=False
-        )
+    )
 
 
 class IGlobalMenuItem(IMenuItem):

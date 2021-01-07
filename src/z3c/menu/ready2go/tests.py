@@ -33,12 +33,15 @@ checker = renormalizing.RENormalizing([
      r"\1"),
     (re.compile('u(".*?")'),
      r"\1"),
-    ])
+])
 
 
-flags = doctest.NORMALIZE_WHITESPACE|\
-        doctest.ELLIPSIS|\
-        doctest.IGNORE_EXCEPTION_DETAIL
+flags = (
+    doctest.NORMALIZE_WHITESPACE
+    | doctest.ELLIPSIS
+    | doctest.IGNORE_EXCEPTION_DETAIL
+)
+
 
 class CheckerStub(object):
     """Just a checker stub."""
@@ -122,9 +125,10 @@ class GlobalMenuItemTest(InterfaceBaseTest):
         site = siteSetUp(True)
         hooks.setSite(site)
         zope.component.provideAdapter(AbsoulteURLStub, (None, None),
-            IAbsoluteURL)
-        zope.component.provideAdapter(CheckerStub, (None, None, None, None,
-            None), interfaces.ISelectedChecker)
+                                      IAbsoluteURL)
+        zope.component.provideAdapter(
+            CheckerStub, (None, None, None, None, None),
+            interfaces.ISelectedChecker)
         super(GlobalMenuItemTest, self).setUp()
 
     def tearDown(self):
@@ -146,9 +150,10 @@ class SiteMenuItemTest(InterfaceBaseTest):
         site = siteSetUp(True)
         hooks.setSite(site)
         zope.component.provideAdapter(AbsoulteURLStub, (None, None),
-            IAbsoluteURL)
-        zope.component.provideAdapter(CheckerStub, (None, None, None, None,
-            None), interfaces.ISelectedChecker)
+                                      IAbsoluteURL)
+        zope.component.provideAdapter(
+            CheckerStub, (None, None, None, None, None),
+            interfaces.ISelectedChecker)
 
     def tearDown(self):
         siteTearDown()
@@ -168,9 +173,10 @@ class ContextMenuItemTest(InterfaceBaseTest):
     def setUp(self):
         zope.component.testing.setUp()
         zope.component.provideAdapter(AbsoulteURLStub, (None, None),
-            IAbsoluteURL)
-        zope.component.provideAdapter(CheckerStub, (None, None, None, None,
-            None), interfaces.ISelectedChecker)
+                                      IAbsoluteURL)
+        zope.component.provideAdapter(
+            CheckerStub, (None, None, None, None, None),
+            interfaces.ISelectedChecker)
 
     def tearDown(self):
         zope.component.testing.tearDown()
@@ -188,18 +194,19 @@ class ContextMenuItemTest(InterfaceBaseTest):
 def test_suite():
     return unittest.TestSuite((
         doctest.DocFileSuite('README.txt',
-            setUp=testing.setUp, tearDown=testing.tearDown,
-            optionflags=flags, checker=checker
-            ),
+                             setUp=testing.setUp, tearDown=testing.tearDown,
+                             optionflags=flags, checker=checker
+                             ),
         doctest.DocFileSuite('zcml.txt',
-            setUp=testing.setUp, tearDown=testing.tearDown,
-            optionflags=flags, checker=checker
-            ),
+                             setUp=testing.setUp, tearDown=testing.tearDown,
+                             optionflags=flags, checker=checker
+                             ),
         unittest.makeSuite(MenuManagerTest),
         unittest.makeSuite(GlobalMenuItemTest),
         unittest.makeSuite(SiteMenuItemTest),
         unittest.makeSuite(ContextMenuItemTest),
-        ))
+    ))
+
 
 if __name__ == '__main__':
     unittest.main(defaultTest='test_suite')
