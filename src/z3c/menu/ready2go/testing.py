@@ -16,9 +16,11 @@
 import zope.security
 from zope.container import contained
 from zope.publisher.interfaces.browser import IBrowserView
-from zope.site.testing import siteSetUp, siteTearDown
+from zope.site.testing import siteSetUp
+from zope.site.testing import siteTearDown
 
-from z3c.menu.ready2go import interfaces, item
+from z3c.menu.ready2go import interfaces
+from z3c.menu.ready2go import item
 
 
 class TestParticipation(object):

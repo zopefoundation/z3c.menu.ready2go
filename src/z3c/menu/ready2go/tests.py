@@ -16,16 +16,23 @@
 import doctest
 import re
 import unittest
-import zope.interface
+
 import zope.component
-from zope.interface.verify import verifyClass, verifyObject
+import zope.interface
+from zope.component import hooks
+from zope.interface.verify import verifyClass
+from zope.interface.verify import verifyObject
+from zope.site.testing import siteSetUp
+from zope.site.testing import siteTearDown
 from zope.testing import renormalizing
 from zope.traversing.browser.interfaces import IAbsoluteURL
 from zope.traversing.interfaces import IPhysicallyLocatable
-from zope.component import hooks
-from zope.site.testing import siteSetUp, siteTearDown
 
-from z3c.menu.ready2go import interfaces, item, manager, testing
+from z3c.menu.ready2go import interfaces
+from z3c.menu.ready2go import item
+from z3c.menu.ready2go import manager
+from z3c.menu.ready2go import testing
+
 
 checker = renormalizing.RENormalizing([
     # Python 3 unicode removed the "u".

@@ -13,10 +13,11 @@
 ##############################################################################
 """Interfaces
 """
-from z3c.menu.ready2go.i18n import MessageFactory as _
 import zope.interface
 import zope.schema
 import zope.viewlet.interfaces
+
+from z3c.menu.ready2go.i18n import MessageFactory as _
 
 
 class IMenuManager(zope.viewlet.interfaces.IViewletManager):

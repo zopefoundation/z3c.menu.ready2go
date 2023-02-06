@@ -15,22 +15,21 @@
 """
 import os.path
 
-import zope.interface
 import zope.configuration.fields
+import zope.interface
 import zope.security.checker
+from zope.browserpage.metaconfigure import _handle_allowed_attributes
+from zope.browserpage.metaconfigure import _handle_allowed_interface
+from zope.browserpage.metaconfigure import _handle_for
+from zope.browserpage.metaconfigure import _handle_permission
 from zope.component import zcml
 from zope.configuration.exceptions import ConfigurationError
-from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.publisher.interfaces.browser import IBrowserPublisher
 from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.publisher.interfaces.browser import IBrowserView
+from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.viewlet import viewlet
 from zope.viewlet.metadirectives import IViewletDirective
-
-from zope.browserpage.metaconfigure import _handle_permission
-from zope.browserpage.metaconfigure import _handle_allowed_attributes
-from zope.browserpage.metaconfigure import _handle_for
-from zope.browserpage.metaconfigure import _handle_allowed_interface
 
 from z3c.menu.ready2go import checker
 from z3c.menu.ready2go import interfaces

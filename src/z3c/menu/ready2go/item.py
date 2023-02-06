@@ -15,14 +15,13 @@
 """
 import zope.interface
 import zope.proxy
+from zope.component import hooks
 from zope.traversing.api import getRoot
 from zope.traversing.browser import absoluteURL
-
 from zope.viewlet import viewlet
-from zope.component import hooks
 
-from z3c.template.template import getPageTemplate
 from z3c.menu.ready2go import interfaces
+from z3c.template.template import getPageTemplate
 
 
 # base menu item mixin

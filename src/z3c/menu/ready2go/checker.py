@@ -13,8 +13,8 @@
 ##############################################################################
 """Menu Item "Selected Checker"
 """
-import zope.interface
 import zope.component
+import zope.interface
 from zope.publisher.interfaces.browser import IBrowserRequest
 
 from z3c.menu.ready2go import interfaces
