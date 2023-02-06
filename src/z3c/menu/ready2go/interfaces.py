@@ -41,37 +41,37 @@ class IMenuItem(zope.viewlet.interfaces.IViewlet):
     title = zope.schema.TextLine(
         title=_('Title'),
         description=_('Menu item title'),
-        default=u''
+        default=''
     )
 
     viewName = zope.schema.TextLine(
         title=_('View name'),
         description=_('Name of the view which the menu points to.'),
-        default=u''
+        default=''
     )
 
     weight = zope.schema.TextLine(
         title=_('Weight'),
         description=_('Weight of the menu item order.'),
-        default=u''
+        default=''
     )
 
     cssActive = zope.schema.TextLine(
         title=_('Active CSS class name'),
         description=_('CSS class name for active menu items'),
-        default=u''
+        default=''
     )
 
     cssInActive = zope.schema.TextLine(
         title=_('In-Active CSS class name'),
         description=_('CSS class name for inactive menu items'),
-        default=u''
+        default=''
     )
 
     css = zope.schema.TextLine(
         title=_('CSS class name'),
         description=_('CSS class name'),
-        default=u''
+        default=''
     )
 
     available = zope.schema.Bool(
@@ -89,13 +89,13 @@ class IMenuItem(zope.viewlet.interfaces.IViewlet):
     url = zope.schema.TextLine(
         title=_('URL'),
         description=_('URL or other url like javascript function.'),
-        default=u''
+        default=''
     )
 
     subMenuProviderName = zope.schema.TextLine(
         title=_('Sub menu provider name'),
         description=_('Name of the sub menu provider.'),
-        default=u''
+        default=''
     )
 
     def getURLContext():

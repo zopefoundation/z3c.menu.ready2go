@@ -23,7 +23,7 @@ from z3c.menu.ready2go import interfaces
 from z3c.menu.ready2go import item
 
 
-class TestParticipation(object):
+class TestParticipation:
     principal = 'foobar'
     interaction = None
 
@@ -33,7 +33,7 @@ class ISample(zope.interface.Interface):
 
 
 @zope.interface.implementer(ISample)
-class Sample(object):
+class Sample:
     """Sample context object."""
 
     def __init__(self, title):

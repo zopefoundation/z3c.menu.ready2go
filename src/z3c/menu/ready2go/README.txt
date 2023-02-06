@@ -76,7 +76,7 @@ Now we have to define a site and a context:
 
   >>> import zope.interface
   >>> from zope.container import contained, btree
-  >>> from zope.container.interfaces import IContained
+  >>> from zope.location.interfaces import IContained
   >>> from zope.component.interfaces import IPossibleSite
   >>> from zope.site.site import SiteManagerContainer
   >>> from zope.site.site import LocalSiteManager
@@ -126,22 +126,22 @@ empty string returned. This means the menus don't find menu items for rendering:
   >>> globalMenu = GlobalMenu(content, request, view)
   >>> globalMenu.update()
   >>> globalMenu.render()
-  u''
+  ''
 
   >>> siteMenu = SiteMenu(content, request, view)
   >>> siteMenu.update()
   >>> siteMenu.render()
-  u''
+  ''
 
   >>> contextMenu = ContextMenu(content, request, view)
   >>> contextMenu.update()
   >>> contextMenu.render()
-  u''
+  ''
 
   >>> addMenu = AddMenu(content, request, view)
   >>> addMenu.update()
   >>> addMenu.render()
-  u''
+  ''
 
 
 Global Menu Item
@@ -175,7 +175,7 @@ the menu item:
   >>> globalMenu.update()
   >>> myGlobalMenuItem = globalMenu.viewlets[0]
   >>> myGlobalMenuItem
-  <MyGlobalMenuItem u'My Global'>
+  <MyGlobalMenuItem 'My Global'>
 
 Now let's render the global menu manager and you can see that the menu item
 get rendered:
@@ -413,7 +413,7 @@ This empty menu manager returns allways an empty string if we render them:
 
   >>> emptyMenu.update()
   >>> emptyMenu.render()
-  u''
+  ''
 
 
 Special use case
@@ -441,7 +441,7 @@ and we don't support any parent for our nirvana object:
   >>> globalMenu = GlobalMenu(nirvana, request, nirvanaView)
   >>> globalMenu.update()
   >>> globalMenu.render()
-  u''
+  ''
 
 Also the SiteMenu doesn't contain any menu item because of the parent less
 object:
@@ -449,14 +449,14 @@ object:
   >>> siteMenu = SiteMenu(nirvana, request, nirvanaView)
   >>> siteMenu.update()
   >>> siteMenu.render()
-  u''
+  ''
 
   >>> contextMenu = ContextMenu(nirvana, request, nirvanaView)
   >>> contextMenu.update()
   >>> contextMenu.render()
-  u''
+  ''
 
   >>> addMenu = AddMenu(nirvana, request, nirvanaView)
   >>> addMenu.update()
   >>> addMenu.render()
-  u''
+  ''

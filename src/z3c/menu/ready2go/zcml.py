@@ -49,8 +49,8 @@ class IMenuSelectorDirective(zope.interface.Interface):
         default=checker.TrueSelectedChecker)
 
     for_ = zope.configuration.fields.GlobalObject(
-        title=u"Context",
-        description=u"The content interface or class this selector is for.",
+        title="Context",
+        description="The content interface or class this selector is for.",
         required=False)
 
     view = zope.configuration.fields.GlobalObject(
@@ -71,15 +71,15 @@ class IMenuSelectorDirective(zope.interface.Interface):
         default=IBrowserRequest)
 
     manager = zope.configuration.fields.GlobalObject(
-        title=u"Menu Manager",
-        description=u"The menu manager interface or class this selector is"
-                    u" for.",
+        title="Menu Manager",
+        description="The menu manager interface or class this selector is"
+                    " for.",
         required=False,
         default=interfaces.IMenuManager)
 
     menu = zope.configuration.fields.GlobalObject(
-        title=u"Menu Item",
-        description=u"The menu item interface or class this selector is for.",
+        title="Menu Item",
+        description="The menu item interface or class this selector is for.",
         required=False,
         default=interfaces.IMenuItem)
 
@@ -88,8 +88,8 @@ class IMenuItemDirective(IViewletDirective):
     """Menu item directive."""
 
     title = zope.configuration.fields.MessageID(
-        title=u"I18n title",
-        description=u"Translatable title for a viewlet.",
+        title="I18n title",
+        description="Translatable title for a viewlet.",
         required=False)
 
 

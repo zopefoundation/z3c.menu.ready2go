@@ -15,13 +15,13 @@
 """
 import zope.interface
 import zope.proxy
+from z3c.template.template import getPageTemplate
 from zope.component import hooks
 from zope.traversing.api import getRoot
 from zope.traversing.browser import absoluteURL
 from zope.viewlet import viewlet
 
 from z3c.menu.ready2go import interfaces
-from z3c.template.template import getPageTemplate
 
 
 # base menu item mixin
@@ -38,7 +38,7 @@ class MenuItem(viewlet.ViewletBase):
     approvedURL = None
 
     # url view name if different then ``selected`` viewName
-    viewName = u'index.html'
+    viewName = 'index.html'
 
     # ``selected`` discriminator values
     contextInterface = zope.interface.Interface
@@ -46,8 +46,8 @@ class MenuItem(viewlet.ViewletBase):
     selectedViewName = viewName
 
     # css classes
-    cssActive = u'selected'
-    cssInActive = u''
+    cssActive = 'selected'
+    cssInActive = ''
 
     # menu order weight
     weight = 0
@@ -56,7 +56,7 @@ class MenuItem(viewlet.ViewletBase):
     subMenuProviderName = None
 
     def __init__(self, context, request, view, manager):
-        super(MenuItem, self).__init__(context, request, view, manager)
+        super().__init__(context, request, view, manager)
         self.view = view
         self.setupFilter()
 
@@ -108,8 +108,8 @@ class MenuItem(viewlet.ViewletBase):
 
     @property
     def url(self):
-        return '%s/%s' % (absoluteURL(self.getURLContext(), self.request),
-                          self.viewName)
+        return '{}/{}'.format(
+            absoluteURL(self.getURLContext(), self.request), self.viewName)
 
     def getURLContext(self):
         return getRoot(self.context)
@@ -119,7 +119,7 @@ class MenuItem(viewlet.ViewletBase):
         return self.template()
 
     def __repr__(self):
-        return '<%s %r>' % (self.__class__.__name__, self.__name__)
+        return '<{} {!r}>'.format(self.__class__.__name__, self.__name__)
 
 
 @zope.interface.implementer(interfaces.IGlobalMenuItem)
