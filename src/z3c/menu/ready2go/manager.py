@@ -41,7 +41,7 @@ class MenuManager(manager.ConditionalViewletManager):
 
 
 @zope.interface.implementer(interfaces.IMenuManager)
-class EmptyMenuManager(object):
+class EmptyMenuManager:
     """Empty menu manager."""
 
     def __init__(self, context, request, view):
@@ -54,4 +54,4 @@ class EmptyMenuManager(object):
         pass
 
     def render(self):
-        return u''
+        return ''

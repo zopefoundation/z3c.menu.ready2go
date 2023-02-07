@@ -14,26 +14,22 @@
 """Test Setup
 """
 import doctest
-import re
 import unittest
-import zope.interface
+
 import zope.component
-from zope.interface.verify import verifyClass, verifyObject
-from zope.testing import renormalizing
+import zope.interface
+from zope.component import hooks
+from zope.interface.verify import verifyClass
+from zope.interface.verify import verifyObject
+from zope.site.testing import siteSetUp
+from zope.site.testing import siteTearDown
 from zope.traversing.browser.interfaces import IAbsoluteURL
 from zope.traversing.interfaces import IPhysicallyLocatable
-from zope.component import hooks
-from zope.site.testing import siteSetUp, siteTearDown
 
-from z3c.menu.ready2go import interfaces, item, manager, testing
-
-checker = renormalizing.RENormalizing([
-    # Python 3 unicode removed the "u".
-    (re.compile("u('.*?')"),
-     r"\1"),
-    (re.compile('u(".*?")'),
-     r"\1"),
-])
+from z3c.menu.ready2go import interfaces
+from z3c.menu.ready2go import item
+from z3c.menu.ready2go import manager
+from z3c.menu.ready2go import testing
 
 
 flags = (
@@ -43,7 +39,7 @@ flags = (
 )
 
 
-class CheckerStub(object):
+class CheckerStub:
     """Just a checker stub."""
 
     def __init__(self, context, request, view, menu, item):
@@ -63,7 +59,7 @@ class CheckerStub(object):
 
 
 @zope.interface.implementer(IPhysicallyLocatable)
-class ParentStub(object):
+class ParentStub:
     """Just an object supporting a context attribtute."""
 
     __name__ = __parent__ = context = None
@@ -78,14 +74,14 @@ class ParentStub(object):
         return self.path
 
 
-class AbsoulteURLStub(object):
+class AbsoulteURLStub:
     """Absolute url stub."""
 
     def __init__(self, context, request):
         pass
 
     def __str__(self):
-        return u'here'
+        return 'here'
 
     __call__ = __str__
 
@@ -129,7 +125,7 @@ class GlobalMenuItemTest(InterfaceBaseTest):
         zope.component.provideAdapter(
             CheckerStub, (None, None, None, None, None),
             interfaces.ISelectedChecker)
-        super(GlobalMenuItemTest, self).setUp()
+        super().setUp()
 
     def tearDown(self):
         siteTearDown()
@@ -195,18 +191,14 @@ def test_suite():
     return unittest.TestSuite((
         doctest.DocFileSuite('README.txt',
                              setUp=testing.setUp, tearDown=testing.tearDown,
-                             optionflags=flags, checker=checker
+                             optionflags=flags,
                              ),
         doctest.DocFileSuite('zcml.txt',
                              setUp=testing.setUp, tearDown=testing.tearDown,
-                             optionflags=flags, checker=checker
+                             optionflags=flags,
                              ),
-        unittest.makeSuite(MenuManagerTest),
-        unittest.makeSuite(GlobalMenuItemTest),
-        unittest.makeSuite(SiteMenuItemTest),
-        unittest.makeSuite(ContextMenuItemTest),
+        unittest.defaultTestLoader.loadTestsFromTestCase(MenuManagerTest),
+        unittest.defaultTestLoader.loadTestsFromTestCase(GlobalMenuItemTest),
+        unittest.defaultTestLoader.loadTestsFromTestCase(SiteMenuItemTest),
+        unittest.defaultTestLoader.loadTestsFromTestCase(ContextMenuItemTest),
     ))
-
-
-if __name__ == '__main__':
-    unittest.main(defaultTest='test_suite')

@@ -71,7 +71,7 @@ As you can see the menu is not selected if we access the page:
 
   >>> firstMenu.update()
   >>> firstMenu.render()
-  u''
+  ''
 
   >>> secondMenu = SecondMenu(sampleContent, request, secondView)
   >>> testing.ISecondMenu.providedBy(secondMenu)
@@ -79,7 +79,7 @@ As you can see the menu is not selected if we access the page:
 
   >>> secondMenu.update()
   >>> secondMenu.render()
-  u''
+  ''
 
 Now we need some menu items for the first menu:
 

@@ -13,14 +13,14 @@
 ##############################################################################
 """Menu Item "Selected Checker"
 """
-import zope.interface
 import zope.component
+import zope.interface
 from zope.publisher.interfaces.browser import IBrowserRequest
 
 from z3c.menu.ready2go import interfaces
 
 
-class CheckerBase(object):
+class CheckerBase:
     """Generic checker base class."""
 
     def __init__(self, context, request, view, menu, item):
